@@ -151,9 +151,9 @@ export const buildYourOwnConfig = {
   },
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
-  brandSelect: 'TESLA',
-  singleSelect: true,
-  singleSelectVin: '??? if this is easy?',
+  brandSelect: '',
+  singleSelect: false,
+  singleSelectVin: '',
   // required endpoints attributes, we already included this for you, no action needed from you
   vehicleProperties: [
     //need to match the keys in the root config, the order will dictate the order of the UI components

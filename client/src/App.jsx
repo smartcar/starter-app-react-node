@@ -7,10 +7,6 @@ import { vehicleProperties, buildYourOwnConfig } from './config';
 
 import { Connect, Vehicle, Loading } from './components';
 
-const staticText = {
-  appName: 'ChargeUp',
-};
-
 const App = () => {
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState({});
@@ -49,7 +45,7 @@ const App = () => {
     redirectUri: process.env.REACT_APP_REDIRECT_URI,
     // set scope of permissions: https://smartcar.com/docs/api/#permissions
     scope: ['read_vehicle_info', ...selectedPermissions],
-    mode: 'test', // one of ['live', 'test', 'simulated']
+    mode: buildYourOwnConfig.mode, // one of ['live', 'test', 'simulated']
     onComplete,
   });
 
@@ -58,8 +54,12 @@ const App = () => {
       forcePrompt: true,
       // bypass car brand selection screen: https://smartcar.com/docs/api#brand-select
       vehicleInfo: {
-        make: ['TESLA'],
+        make: buildYourOwnConfig.brandSelect,
       },
+      // only allow users to authenticate ONE vehicle
+      singleSelect: buildYourOwnConfig.singleSelect,
+      // only allow users to authenticate ONE vehicle specified by VIN
+      singleSelectVin: buildYourOwnConfig.singleSelectVin,
     });
 
   const disconnect = async (e) => {
@@ -126,7 +126,7 @@ const App = () => {
   return (
     <div className="content-wrapper">
       <div className="content">
-        <h1>{staticText.appName}</h1>
+        <h1>{buildYourOwnConfig.staticText.appName}</h1>
         {isLoading && <Loading />}
         {!isLoading &&
           (Object.keys(selectedVehicle).length !== 0 ? (

@@ -83,37 +83,41 @@ const promiseGenerator = (vehicle, request) => {
 const vehicleProperties = {
   // this map gives us information about which smartcar api request to make
   // and how to handle the settled promise
-  vin: {
-    requestName: 'vin',
-    settle: (settlement) => handleSettlement(settlement, 'vin'),
+  amperage: {
+    requestName: 'amperage',
+    settle: (settlement) => handleSettlement(settlement, 'body.amperage'),
   },
-  isPluggedIn: {
-    requestName: 'charge',
-    settle: (settlement) => handleSettlement(settlement, 'isPluggedIn'),
-  },
-  chargeState: {
-    requestName: 'charge',
-    settle: (settlement) => handleSettlement(settlement, 'state'),
-  },
-  chargeCompletion: {
-    requestName: 'chargeCompletion',
-    settle: (settlement) => handleSettlement(settlement, 'body.time'),
+  batteryCapacity: {
+    requestName: 'batteryCapacity',
+    settle: (settlement) => handleSettlement(settlement, 'capacity'),
   },
   batteryLevel: {
     requestName: 'battery',
     settle: (settlement) => handleSettlement(settlement, 'percentRemaining'),
   },
-  range: {
-    requestName: 'battery',
-    settle: (settlement) => handleSettlement(settlement, 'range'),
+  chargeCompletion: {
+    requestName: 'chargeCompletion',
+    settle: (settlement) => handleSettlement(settlement, 'body.time'),
   },
   chargeLimit: {
     requestName: 'chargeLimit',
     settle: (settlement) => handleSettlement(settlement, 'limit'),
   },
-  batteryCapacity: {
-    requestName: 'batteryCapacity',
-    settle: (settlement) => handleSettlement(settlement, 'capacity'),
+  chargeState: {
+    requestName: 'charge',
+    settle: (settlement) => handleSettlement(settlement, 'state'),
+  },
+  isPluggedIn: {
+    requestName: 'charge',
+    settle: (settlement) => handleSettlement(settlement, 'isPluggedIn'),
+  },
+  range: {
+    requestName: 'battery',
+    settle: (settlement) => handleSettlement(settlement, 'range'),
+  },
+  vin: {
+    requestName: 'vin',
+    settle: (settlement) => handleSettlement(settlement, 'vin'),
   },
   voltage: {
     requestName: 'voltage',
@@ -122,10 +126,6 @@ const vehicleProperties = {
   wattage: {
     requestName: 'wattage',
     settle: (settlement) => handleSettlement(settlement, 'body.wattage'),
-  },
-  amperage: {
-    requestName: 'amperage',
-    settle: (settlement) => handleSettlement(settlement, 'body.amperage'),
   },
 }
 

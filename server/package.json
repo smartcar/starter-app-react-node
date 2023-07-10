@@ -1,0 +1,23 @@
+{
+  "name": "getting-started-node-sdk",
+  "version": "1.0.0",
+  "description": "Getting Started with Node SDK",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^9.0.0",
+    "smartcar": "^9.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": ">=14.4.0",
+    "npm": ">=8.3.0"
+  }
+}

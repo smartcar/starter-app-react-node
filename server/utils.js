@@ -65,44 +65,72 @@ const getVehiclesWithAttributes = async (vehicleIds, accessToken) => {
   return vehiclesWithAttributes;
 }
 
-const getVehicleInfo = async (vehicleId, accessToken) => {
-  const vehicle = createSmartcarVehicle(vehicleId, accessToken);
-  const [
-    vin,
-    charge,
-    chargeCompletion,
-    battery,
-    chargeLimit,
-    batteryCapacity,
-    voltage,
-    wattage,
-    amperage,
-  ] = await Promise.allSettled([
-    vehicle.vin(),
-    vehicle.charge(),
-    vehicle.request('GET', 'tesla/charge/completion'),
-    vehicle.battery(),
-    vehicle.getChargeLimit(),
-    vehicle.batteryCapacity(),
-    vehicle.request('GET', 'tesla/charge/voltmeter'),
-    vehicle.request('GET', 'tesla/charge/wattmeter'),
-    vehicle.request('GET', 'tesla/charge/ammeter')
-  ]);
+const requestName = {
+  vin: 'vin',
+  isPluggedIn: 'charge',
+  chargeState: 'charge',
+  chargeCompletion: 'chargeCompletion',
+  batteryLevel: 'battery',
+  range: 'battery',
+  chargeLimit: 'chargeLimit',
+  batteryCapacity: 'batteryCapacity',
+  voltage: 'voltage',
+  wattage: 'wattage',
+  amperage: 'amperage',
+}
 
-  return {
-    id: vehicleId,
-    vin: handleSettlement(vin, 'vin'),
-    isPluggedIn: handleSettlement(charge, 'isPluggedIn'),
-    chargeState: handleSettlement(charge, 'state'),
-    chargeCompletion: handleSettlement(chargeCompletion, 'body.time'),
-    batteryLevel: handleSettlement(battery, 'percentRemaining'),
-    range: handleSettlement(battery, 'range'),
-    chargeLimit: handleSettlement(chargeLimit, 'limit'),
-    batteryCapacity: handleSettlement(batteryCapacity, 'capacity'),
-    voltage: handleSettlement(voltage, 'body.voltage'),
-    wattage: handleSettlement(wattage, 'body.wattage'),
-    amperage: handleSettlement(amperage, 'body.amperage'),
+const promiseGenerator = (vehicle, request) => {
+  const requestMap = {
+    vin: vehicle.vin(),
+    charge: vehicle.charge(),
+    chargeCompletion: vehicle.request('GET', 'tesla/charge/completion'),
+    battery: vehicle.battery(),
+    chargeLimit: vehicle.getChargeLimit(),
+    batteryCapacity: vehicle.batteryCapacity(),
+    voltage: vehicle.request('GET', 'tesla/charge/voltmeter'),
+    wattage: vehicle.request('GET', 'tesla/charge/wattmeter'),
+    amperage: vehicle.request('GET', 'tesla/charge/ammeter'),
   }
+  return requestMap[request];
+}
+
+const settle = (settlement, vehicleProperty) => {
+  // some request endpoints return multiple data points or as nested fields
+  // we'll use handleSettlement to retrieve the piece of data we want
+  const settlementMap = {
+    vin: handleSettlement(settlement, 'vin'),
+    isPluggedIn: handleSettlement(settlement, 'isPluggedIn'),
+    chargeState: handleSettlement(settlement, 'state'),
+    chargeCompletion: handleSettlement(settlement, 'body.time'),
+    batteryLevel: handleSettlement(settlement, 'percentRemaining'),
+    range: handleSettlement(settlement, 'range'),
+    chargeLimit: handleSettlement(settlement, 'limit'),
+    batteryCapacity: handleSettlement(settlement, 'capacity'),
+    voltage: handleSettlement(settlement, 'body.voltage'),
+    wattage: handleSettlement(settlement, 'body.wattage'),
+    amperage: handleSettlement(settlement, 'body.amperage'),
+  };
+  return settlementMap[vehicleProperty];
+}
+
+const getVehicleInfo = async (vehicleId, accessToken, vehicleProperties = []) => {
+  const vehicle = createSmartcarVehicle(vehicleId, accessToken);
+  const requests = vehicleProperties.map(vehicleProperty => requestName[vehicleProperty]);
+  const uniqueRequests = [...new Set(requests)];
+  const vehiclePromises = uniqueRequests.map(request => promiseGenerator(vehicle, request));
+  const settlements = await Promise.allSettled(vehiclePromises);
+  const requestToSettlement = {};
+  uniqueRequests.forEach((request, index) => requestToSettlement[request] = settlements[index]);
+
+  const vehicleInfo = { id: vehicleId};
+  vehicleProperties.forEach(vehicleProperty => {
+    const request = requestName[vehicleProperty];
+    const settlement = requestToSettlement[request];
+    vehicleInfo[vehicleProperty] = settle(settlement, vehicleProperty);
+  })
+
+
+  return vehicleInfo;
 }
 
 

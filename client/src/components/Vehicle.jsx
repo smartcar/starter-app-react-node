@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { formatName, timeDiff } from '../utils';
 import api from '../api';
 import Loading from './Loading';
+import { SetVehicleProperty, VehicleProperty } from './Properties';
+import { buildYourOwnConfig, vehicleProperties } from '../config';
 
 const text = {
   startCharge: 'Start charge',
@@ -36,13 +38,17 @@ const Vehicle = ({
   const attributes = vehicles.find((vehicle) => vehicle.id === id);
   const { make, model, year } = attributes;
   const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
-  const [newChargeLimit, setNewChargeLimit] = useState(chargeLimit * 100);
-  const [newAmperage, setNewAmperage] = useState(amperage);
+  const [newVehicleProperty, setNewVehicleProperty] = useState({
+    chargeLimit: '',
+    amperage: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setNewChargeLimit(chargeLimit * 100);
-    setNewAmperage(amperage);
+    setNewVehicleProperty({
+      chargeLimit: chargeLimit * 100,
+      amperage: amperage,
+    });
   }, [chargeLimit, amperage]);
 
   useEffect(() => {
@@ -56,21 +62,38 @@ const Vehicle = ({
     setSelectedVehicle(data);
   };
 
-  const handlePropertyChange = (e) => {
-    if (e.target.name === 'charge-limit') {
-      setNewChargeLimit(e.target.value);
-    } else if (e.target.name === 'amperage') {
-      setNewAmperage(e.target.value);
+  const properties = buildYourOwnConfig.vehicleProperties.map((property) => {
+    if (vehicleProperties[property].permission === 'read_vin') {
+      return null;
+    } else if (
+      vehicleProperties[property].componentType === 'VehicleProperty'
+    ) {
+      return (
+        <VehicleProperty
+          property={{ [property]: info[property] }}
+          key={property}
+          text={vehicleProperties[property].text}
+        />
+      );
+    } else if (
+      vehicleProperties[property].componentType === 'SetVehicleProperty'
+    ) {
+      const { targetProperty } = vehicleProperties[property];
+      return (
+        <SetVehicleProperty
+          property={property}
+          key={property}
+          targetProperty={targetProperty}
+          currentValue={info[targetProperty]}
+          newVehicleProperty={newVehicleProperty}
+          setNewVehicleProperty={setNewVehicleProperty}
+          text={vehicleProperties[property].text}
+        />
+      );
+    } else {
+      return null;
     }
-  };
-
-  const handlePropertyConfirmation = (e) => {
-    if (e.target.name === 'charge-limit') {
-      setChargeLimit(newChargeLimit);
-    } else if (e.target.name === 'amperage') {
-      setAmperage(newAmperage);
-    }
-  };
+  });
 
   return (
     <div className="container vehicle">
@@ -108,71 +131,7 @@ const Vehicle = ({
               </button>
             </div>
           )}
-          <div className="container stats">
-            <h3>{text.pluggedIn}</h3>
-            <p>{text.pluggedInStatus(isPluggedIn)}</p>
-            <h3>{text.state}</h3>
-            <p>{text.stateStatus(chargeState)}</p>
-            {chargeState === 'CHARGING' && (
-              <>
-                <h3>{text.timeToCompletion}</h3>
-                <p>{text.timeToCompletionStatus(chargeCompletion)}</p>
-              </>
-            )}
-            <h3>{text.battery}</h3>
-            <p>{text.batteryStatus(batteryLevel)}</p>
-            <h3>{text.range}</h3>
-            <p>{text.rangeStatus(range)}</p>
-            <h3>{text.chargeLimit}</h3>
-            <p>{text.chargeLimitStatus(chargeLimit)}</p>
-            <div className="editable-property">
-              <input
-                className="property-update"
-                name="charge-limit"
-                type="number"
-                step="1"
-                min="0"
-                max="100"
-                value={newChargeLimit}
-                onChange={handlePropertyChange}
-              />
-              <button
-                className="property-confirm"
-                name="charge-limit"
-                disabled={newChargeLimit === chargeLimit}
-                onClick={handlePropertyConfirmation}
-              >
-                {text.setChargeLimit}
-              </button>
-            </div>
-            <h3>{text.capacity}</h3>
-            <p>{text.capacityStatus(batteryCapacity)}</p>
-            <h3>{text.voltage}</h3>
-            <p>{text.voltageStatus(voltage)}</p>
-            <h3>{text.wattage}</h3>
-            <p>{text.wattageStatus(wattage)}</p>
-            <h3>{text.amperage}</h3>
-            <p>{text.amperageStatus(amperage)}</p>
-            <div className="editable-property">
-              <input
-                className="property-update"
-                name="amperage"
-                type="number"
-                step="1"
-                min="0"
-                value={newAmperage}
-                onChange={handlePropertyChange}
-              />
-              <button
-                className="property-confirm"
-                name="amperage"
-                disabled={newAmperage === amperage}
-                onClick={handlePropertyConfirmation}
-              >
-                {text.setAmperage}
-              </button>
-            </div>
-          </div>
+          <div className="container stats">{properties}</div>
           <div>
             <button
               className="disconnect"

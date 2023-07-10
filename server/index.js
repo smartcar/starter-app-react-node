@@ -66,6 +66,7 @@ app.get('/vehicles', authenticate, async function(req, res) {
   try {
     let vehicles = [];
     let selectedVehicle = {};
+    const vehicleProperties = req.query.vehicleProperties?.split('.');
     // in the event some vehicles fail to disconnect, we'll return those vehicles along with this error message
     const error = req.query.error === 'disconnection-failure' ? 'Some vehicles failed to disconnect' : undefined;
     const { accessToken } = req.tokens;
@@ -75,7 +76,7 @@ app.get('/vehicles', authenticate, async function(req, res) {
     // TODO: use Promise.all for these two async calls
     if (vehicleIds.length > 0) {
       vehicles = await getVehiclesWithAttributes(vehicleIds, accessToken);
-      selectedVehicle = await getVehicleInfo(vehicles[0].id, accessToken);
+      selectedVehicle = await getVehicleInfo(vehicles[0].id, accessToken, vehicleProperties);
     }
     res.status(200).json({
       vehicles,
@@ -90,9 +91,10 @@ app.get('/vehicles', authenticate, async function(req, res) {
 
 app.get('/vehicle', authenticate, async function(req, res) {
   try {
+    const vehicleProperties = req.query.vehicleProperties?.split('.');
     const { accessToken } = req.tokens;
     const vehicleId = req.query.vehicleId;
-    const vehicleData = await getVehicleInfo(vehicleId, accessToken);
+    const vehicleData = await getVehicleInfo(vehicleId, accessToken, vehicleProperties);
     console.log(vehicleData);
     res.json(vehicleData);
   } catch (err) {

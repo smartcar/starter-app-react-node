@@ -32,6 +32,17 @@ const getAccess = (req) => {
   return access;
 };
 
+const getVehiclesWithAttributes = async (vehicleIds, accessToken) => {
+  const vehiclePromises = vehicleIds.map((vehicleId) => {
+    const vehicle = createSmartcarVehicle(vehicleId, accessToken);
+    return vehicle.attributes();
+  })
+  const settlements = await Promise.allSettled(vehiclePromises);
+  // TODO: handle case where attributes() throws error but we still have the vehicleId
+  const vehiclesWithAttributes = settlements.map((settlement) => handleSettlement(settlement))
+  return vehiclesWithAttributes;
+}
+
 /**
  * Helper function to process settled promise
  *
@@ -54,31 +65,6 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
   return value;
 }
 
-const getVehiclesWithAttributes = async (vehicleIds, accessToken) => {
-  const vehiclePromises = vehicleIds.map((vehicleId) => {
-    const vehicle = createSmartcarVehicle(vehicleId, accessToken);
-    return vehicle.attributes();
-  })
-  const settlements = await Promise.allSettled(vehiclePromises);
-  // TODO: handle case where attributes() throws error but we still have the vehicleId
-  const vehiclesWithAttributes = settlements.map((settlement) => handleSettlement(settlement))
-  return vehiclesWithAttributes;
-}
-
-const requestName = {
-  vin: 'vin',
-  isPluggedIn: 'charge',
-  chargeState: 'charge',
-  chargeCompletion: 'chargeCompletion',
-  batteryLevel: 'battery',
-  range: 'battery',
-  chargeLimit: 'chargeLimit',
-  batteryCapacity: 'batteryCapacity',
-  voltage: 'voltage',
-  wattage: 'wattage',
-  amperage: 'amperage',
-}
-
 const promiseGenerator = (vehicle, request) => {
   const requestMap = {
     vin: vehicle.vin(),
@@ -94,28 +80,61 @@ const promiseGenerator = (vehicle, request) => {
   return requestMap[request];
 }
 
-const settle = (settlement, vehicleProperty) => {
-  // some request endpoints return multiple data points or as nested fields
-  // we'll use handleSettlement to retrieve the piece of data we want
-  const settlementMap = {
-    vin: handleSettlement(settlement, 'vin'),
-    isPluggedIn: handleSettlement(settlement, 'isPluggedIn'),
-    chargeState: handleSettlement(settlement, 'state'),
-    chargeCompletion: handleSettlement(settlement, 'body.time'),
-    batteryLevel: handleSettlement(settlement, 'percentRemaining'),
-    range: handleSettlement(settlement, 'range'),
-    chargeLimit: handleSettlement(settlement, 'limit'),
-    batteryCapacity: handleSettlement(settlement, 'capacity'),
-    voltage: handleSettlement(settlement, 'body.voltage'),
-    wattage: handleSettlement(settlement, 'body.wattage'),
-    amperage: handleSettlement(settlement, 'body.amperage'),
-  };
-  return settlementMap[vehicleProperty];
+const vehicleProperties = {
+  // this map gives us information about which smartcar api request to make
+  // and how to handle the settled promise
+  vin: {
+    requestName: 'vin',
+    settle: (settlement) => handleSettlement(settlement, 'vin'),
+  },
+  isPluggedIn: {
+    requestName: 'charge',
+    settle: (settlement) => handleSettlement(settlement, 'isPluggedIn'),
+  },
+  chargeState: {
+    requestName: 'charge',
+    settle: (settlement) => handleSettlement(settlement, 'state'),
+  },
+  chargeCompletion: {
+    requestName: 'chargeCompletion',
+    settle: (settlement) => handleSettlement(settlement, 'body.time'),
+  },
+  batteryLevel: {
+    requestName: 'battery',
+    settle: (settlement) => handleSettlement(settlement, 'percentRemaining'),
+  },
+  range: {
+    requestName: 'battery',
+    settle: (settlement) => handleSettlement(settlement, 'range'),
+  },
+  chargeLimit: {
+    requestName: 'chargeLimit',
+    settle: (settlement) => handleSettlement(settlement, 'limit'),
+  },
+  batteryCapacity: {
+    requestName: 'batteryCapacity',
+    settle: (settlement) => handleSettlement(settlement, 'capacity'),
+  },
+  voltage: {
+    requestName: 'voltage',
+    settle: (settlement) => handleSettlement(settlement, 'body.voltage'),
+  },
+  wattage: {
+    requestName: 'wattage',
+    settle: (settlement) => handleSettlement(settlement, 'body.wattage'),
+  },
+  amperage: {
+    requestName: 'amperage',
+    settle: (settlement) => handleSettlement(settlement, 'body.amperage'),
+  },
 }
 
-const getVehicleInfo = async (vehicleId, accessToken, vehicleProperties = []) => {
+// You'll want to reserve this method for fetching vehicle info for the first time (onboarding)
+// You may want to store this information in a database to avoid excessive api calls to Smartcar and to the vehicle
+// To update data that may have gone stale, you can poll data or use our webhooks
+const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = []) => {
   const vehicle = createSmartcarVehicle(vehicleId, accessToken);
-  const requests = vehicleProperties.map(vehicleProperty => requestName[vehicleProperty]);
+  const requests = requestedProperties.map(vehicleProperty => vehicleProperties[vehicleProperty].requestName);
   const uniqueRequests = [...new Set(requests)];
   const vehiclePromises = uniqueRequests.map(request => promiseGenerator(vehicle, request));
   const settlements = await Promise.allSettled(vehiclePromises);
@@ -123,12 +142,12 @@ const getVehicleInfo = async (vehicleId, accessToken, vehicleProperties = []) =>
   uniqueRequests.forEach((request, index) => requestToSettlement[request] = settlements[index]);
 
   const vehicleInfo = { id: vehicleId};
-  vehicleProperties.forEach(vehicleProperty => {
-    const request = requestName[vehicleProperty];
+  requestedProperties.forEach(requestedProperty => {
+    const vehicleProperty = vehicleProperties[requestedProperty];
+    const request = vehicleProperty.requestName;
     const settlement = requestToSettlement[request];
-    vehicleInfo[vehicleProperty] = settle(settlement, vehicleProperty);
+    vehicleInfo[requestedProperty] = vehicleProperty.settle(settlement);
   })
-
 
   return vehicleInfo;
 }

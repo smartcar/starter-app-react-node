@@ -5,7 +5,7 @@ const formatName = (name) => {
   const displayNames = {
     CHARGING: 'Charging',
     FULLY_CHARGED: 'Fully charged',
-    NOT_CHARGING: 'Not charging'
+    NOT_CHARGING: 'Not charging',
   };
 
   return displayNames[name] || name;
@@ -27,7 +27,23 @@ const timeDiff = (date) => {
   return `${hours} hr ${minutes} min`;
 };
 
+/**
+ * Returns array of permissions from selected properties (in config)
+ */
+const getPermissions = (selectedProperties, vehicleProperties) => {
+  const permissions = selectedProperties.reduce((result, property) => {
+    const permission = vehicleProperties[property].permission;
+    if (!result.includes(permission)) {
+      result.push(permission);
+    }
+    return result;
+  }, []);
+
+  return permissions;
+};
+
 module.exports = {
   formatName,
-  timeDiff
+  timeDiff,
+  getPermissions,
 };

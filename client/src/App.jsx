@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Smartcar from '@smartcar/auth';
 import api from './api';
 import './App.css';
+import { getPermissions } from './utils';
+import { vehicleProperties, buildYourOwnConfig } from './config';
 
 import { Connect, Vehicle, Loading } from './components';
 
@@ -37,17 +39,16 @@ const App = () => {
     }
   };
 
+  const selectedPermissions = getPermissions(
+    buildYourOwnConfig.vehicleProperties,
+    vehicleProperties
+  );
+
   const smartcar = new Smartcar({
     clientId: process.env.REACT_APP_CLIENT_ID,
     redirectUri: process.env.REACT_APP_REDIRECT_URI,
     // set scope of permissions: https://smartcar.com/docs/api/#permissions
-    scope: [
-      'read_vehicle_info',
-      'read_battery',
-      'read_charge',
-      'read_vin',
-      'control_charge',
-    ],
+    scope: ['read_vehicle_info', ...selectedPermissions],
     mode: 'test', // one of ['live', 'test', 'simulated']
     onComplete,
   });
@@ -84,7 +85,7 @@ const App = () => {
       setSelectedVehicle({
         ...selectedVehicle,
         chargeState: data.chargeState,
-      })
+      });
       setError(null);
     } catch (error) {
       const errorMessage = error.response.data.error;
@@ -127,21 +128,22 @@ const App = () => {
       <div className="content">
         <h1>{staticText.appName}</h1>
         {isLoading && <Loading />}
-        {!isLoading && (Object.keys(selectedVehicle).length !== 0 ? (
-          <>
-            <Vehicle
-              info={selectedVehicle}
-              disconnect={disconnect}
-              vehicles={vehicles}
-              setSelectedVehicle={setSelectedVehicle}
-              controlCharge={controlCharge}
-              setChargeLimit={setChargeLimit}
-              setAmperage={setAmperage}
-            />
-          </>
-        ) : (
-          <Connect onClick={authorize} />
-        ))}
+        {!isLoading &&
+          (Object.keys(selectedVehicle).length !== 0 ? (
+            <>
+              <Vehicle
+                info={selectedVehicle}
+                disconnect={disconnect}
+                vehicles={vehicles}
+                setSelectedVehicle={setSelectedVehicle}
+                controlCharge={controlCharge}
+                setChargeLimit={setChargeLimit}
+                setAmperage={setAmperage}
+              />
+            </>
+          ) : (
+            <Connect onClick={authorize} />
+          ))}
         {error && <div className="error">{error.message}</div>}
       </div>
     </div>

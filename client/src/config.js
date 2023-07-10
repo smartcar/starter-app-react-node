@@ -1,4 +1,4 @@
-const vehicleProperties = {
+export const vehicleProperties = {
   amperage: {
     permission: 'read_charge',
     requestType: 'GET',
@@ -53,7 +53,19 @@ const vehicleProperties = {
     componentType: 'VehicleProperty',
     text: 'text',
   },
+  evRange: {
+    permission: 'read_battery',
+    requestType: 'GET',
+    componentType: 'VehicleProperty',
+    text: 'text',
+  },
   fuel: {
+    permission: 'read_fuel',
+    requestType: 'GET',
+    componentType: 'VehicleProperty',
+    text: 'text',
+  },
+  iceRange: {
     permission: 'read_fuel',
     requestType: 'GET',
     componentType: 'VehicleProperty',
@@ -83,12 +95,6 @@ const vehicleProperties = {
     componentType: 'VehicleProperty',
     text: 'text',
   },
-  range: {
-    permission: '',
-    requestType: 'GET',
-    componentType: 'VehicleProperty',
-    text: 'text',
-  },
   tirePressure: {
     permission: 'read_tires',
     requestType: 'GET',
@@ -114,7 +120,7 @@ const vehicleProperties = {
     text: 'text',
   },
 };
-const energyConfig = {
+export const energyConfig = {
   staticText: {
     appName: 'ChargeUp',
   },
@@ -132,15 +138,14 @@ const energyConfig = {
     'chargeCompletion',
     'chargeLimit',
     'chargeState',
-    'id',
     'isPluggedIn',
-    'range',
+    'evRange',
     'vin',
     'voltage',
     'wattage',
   ],
 };
-const buildYourOwnConfig = {
+export const buildYourOwnConfig = {
   staticText: {
     appName: 'Your App name',
   },

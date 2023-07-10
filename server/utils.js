@@ -67,15 +67,16 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
 
 const promiseGenerator = (vehicle, request) => {
   const requestMap = {
-    vin: vehicle.vin(),
+    amperage: vehicle.request('GET', 'tesla/charge/ammeter'),
+    battery: vehicle.battery(),
+    batteryCapacity: vehicle.batteryCapacity(),
     charge: vehicle.charge(),
     chargeCompletion: vehicle.request('GET', 'tesla/charge/completion'),
-    battery: vehicle.battery(),
     chargeLimit: vehicle.getChargeLimit(),
-    batteryCapacity: vehicle.batteryCapacity(),
+    fuelTank: vehicle.fuel(),
+    vin: vehicle.vin(),
     voltage: vehicle.request('GET', 'tesla/charge/voltmeter'),
     wattage: vehicle.request('GET', 'tesla/charge/wattmeter'),
-    amperage: vehicle.request('GET', 'tesla/charge/ammeter'),
   }
   return requestMap[request];
 }
@@ -107,13 +108,17 @@ const vehicleProperties = {
     requestName: 'charge',
     settle: (settlement) => handleSettlement(settlement, 'state'),
   },
+  evRange: {
+    requestName: 'battery',
+    settle: (settlement) => handleSettlement(settlement, 'range'),
+  },
+  iceRange: {
+    requestName: 'fuelTank',
+    settle: (settlement) => handleSettlement(settlement, 'range'),
+  },
   isPluggedIn: {
     requestName: 'charge',
     settle: (settlement) => handleSettlement(settlement, 'isPluggedIn'),
-  },
-  range: {
-    requestName: 'battery',
-    settle: (settlement) => handleSettlement(settlement, 'range'),
   },
   vin: {
     requestName: 'vin',

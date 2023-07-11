@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../api';
 import Loading from './Loading';
 import { SetVehicleProperty, VehicleProperty } from './Properties';
-import { buildYourOwnConfig, vehicleProperties } from '../config';
+import { config, vehicleProperties } from '../config';
 
 const text = {
   startCharge: 'Start charge',
@@ -50,7 +50,7 @@ const Vehicle = ({
   };
 
   // Map through properties listed in config and display respective information
-  const properties = buildYourOwnConfig.vehicleProperties.map((property) => {
+  const properties = config.vehicleProperties.map((property) => {
     if (vehicleProperties[property].permission === 'read_vin') {
       return null;
     } else if (

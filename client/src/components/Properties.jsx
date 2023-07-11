@@ -35,6 +35,9 @@ const staticText = {
   disconnectAll: 'Disconnect all',
 };
 
+/**
+ *  Renders simple read only properties
+ */
 export const VehicleProperty = ({ property, text }) => {
   const propertyName = Object.keys(property)[0];
   return (
@@ -45,6 +48,9 @@ export const VehicleProperty = ({ property, text }) => {
   );
 };
 
+/**
+ *  Renders inputs to update a target property e.g. setChargeLimit -> chargeLimit
+ */
 export const SetVehicleProperty = ({
   property,
   targetProperty,
@@ -54,6 +60,7 @@ export const SetVehicleProperty = ({
   text,
   updateProperty,
 }) => {
+  // Updates state with new property value to be sent to server
   const handlePropertyChange = (e) => {
     setNewVehicleProperty({
       ...newVehicleProperty,
@@ -61,6 +68,7 @@ export const SetVehicleProperty = ({
     });
   };
 
+  // Sends request to server to update the target property
   const handlePropertyConfirmation = () => {
     updateProperty(targetProperty, newVehicleProperty[targetProperty]);
   };

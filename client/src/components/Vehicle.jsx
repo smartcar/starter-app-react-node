@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { formatName, timeDiff } from '../utils';
 import api from '../api';
 import Loading from './Loading';
 import { SetVehicleProperty, VehicleProperty } from './Properties';
@@ -19,29 +18,18 @@ const Vehicle = ({
   setSelectedVehicle,
   updateProperty,
 }) => {
-  const {
-    amperage,
-    batteryLevel,
-    batteryCapacity,
-    chargeCompletion,
-    chargeLimit,
-    chargeState,
-    id,
-    isPluggedIn,
-    range,
-    vin,
-    voltage,
-    wattage,
-  } = info;
+  const { amperage, chargeLimit, chargeState, id, isPluggedIn, vin } = info;
   const attributes = vehicles.find((vehicle) => vehicle.id === id);
   const { make, model, year } = attributes;
   const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
+  // If enabled, stores inputs to update respective properties e.g. setAmperage
   const [newVehicleProperty, setNewVehicleProperty] = useState({
     chargeLimit: '',
     amperage: '',
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  // Resets state when vehicle is switched or if the current vehicle's status has changed
   useEffect(() => {
     setNewVehicleProperty({
       chargeLimit: chargeLimit * 100,
@@ -49,6 +37,7 @@ const Vehicle = ({
     });
   }, [chargeLimit, amperage]);
 
+  // Removes the loading screen if the vehicle has been retrieved
   useEffect(() => {
     setIsLoading(false);
   }, [id]);
@@ -60,6 +49,7 @@ const Vehicle = ({
     setSelectedVehicle(data);
   };
 
+  // Map through properties listed in config and display respective information
   const properties = buildYourOwnConfig.vehicleProperties.map((property) => {
     if (vehicleProperties[property].permission === 'read_vin') {
       return null;

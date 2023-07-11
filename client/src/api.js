@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getReadProperties } from './utils';
 
 let api = {};
 
@@ -16,13 +17,22 @@ api.exchangeCode = async (code) => {
 };
 
 api.getVehicles = async () => {
-  const { data } = await instance.get(`/vehicles`);
+  const vehicleProperties = getReadProperties().join('.');
+  const { data } = await instance.get(`/vehicles`,
+    {
+      params: { vehicleProperties },
+    }
+  );
   return data;
 };
 
 api.getVehicle = async (vehicleId) => {
+  const vehicleProperties = getReadProperties().join('.');
   const { data } = await instance.get(`/vehicle`, {
-    params: { vehicleId }
+    params: {
+      vehicleId,
+      vehicleProperties,
+    }
   });
   return data;
 };

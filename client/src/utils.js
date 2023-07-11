@@ -39,3 +39,10 @@ export const getPermissions = () => {
 
   return permissions;
 };
+
+/**
+ * Returns an array of vehicle properties with a GET requestType
+ */
+export const getReadProperties = () => {
+  return config.vehicleProperties.filter(property => vehicleProperties[property].requestType === 'GET')
+}

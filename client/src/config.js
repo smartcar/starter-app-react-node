@@ -129,11 +129,11 @@ export const vehicleProperties = {
   },
 };
 
-const energyConfig = {
+const energyUtilitiesConfig = {
   staticText: {
     appName: 'ChargeUp',
   },
-  mode: 'live', // one of ['live', 'test', 'simulated']
+  mode: 'test', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
   singleSelect: false,
@@ -173,4 +173,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = energyConfig;
+export const config = energyUtilitiesConfig;

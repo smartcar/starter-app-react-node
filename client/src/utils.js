@@ -1,4 +1,4 @@
-import { config, vehicleProperties } from './config';
+import { config } from './config';
 /**
  * Helper function that returns smartcar vehicle instance.
  */
@@ -32,9 +32,7 @@ export const timeDiff = (date) => {
  * Returns array of permissions from selected properties (in config)
  */
 export const getPermissions = () => {
-  const requests = config.vehicleProperties.map(
-    (vehicleProperty) => vehicleProperties[vehicleProperty].permission
-  );
+  const requests = config.vehicleProperties.map(property => property.permission);
   const permissions = [...new Set(requests)];
 
   return permissions;
@@ -44,5 +42,7 @@ export const getPermissions = () => {
  * Returns an array of vehicle properties with a GET requestType
  */
 export const getReadProperties = () => {
-  return config.vehicleProperties.filter(property => vehicleProperties[property].requestType === 'GET')
+  return config.vehicleProperties
+    .filter(property => property.requestType === 'GET')
+    .map(property => property.name);
 }

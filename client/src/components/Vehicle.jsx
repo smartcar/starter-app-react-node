@@ -17,9 +17,7 @@ const Vehicle = ({
   disconnect,
   vehicles,
   setSelectedVehicle,
-  controlCharge,
-  setChargeLimit,
-  setAmperage,
+  updateProperty,
 }) => {
   const {
     amperage,
@@ -88,6 +86,7 @@ const Vehicle = ({
           newVehicleProperty={newVehicleProperty}
           setNewVehicleProperty={setNewVehicleProperty}
           text={vehicleProperties[property].text}
+          updateProperty={updateProperty}
         />
       );
     } else {
@@ -121,8 +120,12 @@ const Vehicle = ({
             <div>
               <button
                 className="charge"
-                onClick={() =>
-                  controlCharge(chargeState === 'CHARGING' ? 'STOP' : 'START')
+                name="chargeState"
+                onClick={(e) =>
+                  updateProperty(
+                    e.target.name,
+                    chargeState === 'CHARGING' ? 'STOP' : 'START'
+                  )
                 }
               >
                 {chargeState === 'CHARGING'

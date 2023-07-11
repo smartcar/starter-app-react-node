@@ -78,44 +78,29 @@ const App = () => {
     }
   };
 
-  const controlCharge = async (action) => {
+  const updateProperty = async (property, action) => {
     try {
       const vehicleId = selectedVehicle.id;
-      const { data } = await api.controlCharge(vehicleId, action);
-      setSelectedVehicle({
-        ...selectedVehicle,
-        chargeState: data.chargeState,
-      });
-      setError(null);
-    } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
-    }
-  };
-
-  const setChargeLimit = async (limit) => {
-    try {
-      const vehicleId = selectedVehicle.id;
-      const { data } = await api.setChargeLimit(vehicleId, limit / 100);
-      setSelectedVehicle({
-        ...selectedVehicle,
-        chargeLimit: data.limit,
-      });
-      setError(null);
-    } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
-    }
-  };
-
-  const setAmperage = async (amperage) => {
-    try {
-      const vehicleId = selectedVehicle.id;
-      const { data } = await api.setAmperage(vehicleId, amperage);
-      setSelectedVehicle({
-        ...selectedVehicle,
-        amperage: data.amperage,
-      });
+      if (property === 'chargeState') {
+        const { data } = await api.controlCharge(vehicleId, action);
+        setSelectedVehicle({
+          ...selectedVehicle,
+          chargeState: data.chargeState,
+        });
+      } else if (property === 'chargeLimit') {
+        const { data } = await api.setChargeLimit(vehicleId, action / 100);
+        setSelectedVehicle({
+          ...selectedVehicle,
+          chargeLimit: data.limit,
+        });
+      } else if (property === 'amperage') {
+        console.log(property, action);
+        const { data } = await api.setAmperage(vehicleId, action);
+        setSelectedVehicle({
+          ...selectedVehicle,
+          amperage: data.amperage,
+        });
+      }
       setError(null);
     } catch (error) {
       const errorMessage = error.response.data.error;
@@ -136,9 +121,7 @@ const App = () => {
                 disconnect={disconnect}
                 vehicles={vehicles}
                 setSelectedVehicle={setSelectedVehicle}
-                controlCharge={controlCharge}
-                setChargeLimit={setChargeLimit}
-                setAmperage={setAmperage}
+                updateProperty={updateProperty}
               />
             </>
           ) : (

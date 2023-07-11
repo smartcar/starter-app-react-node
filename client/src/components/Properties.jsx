@@ -52,6 +52,7 @@ export const SetVehicleProperty = ({
   newVehicleProperty,
   setNewVehicleProperty,
   text,
+  updateProperty,
 }) => {
   const handlePropertyChange = (e) => {
     setNewVehicleProperty({
@@ -60,13 +61,8 @@ export const SetVehicleProperty = ({
     });
   };
 
-  const handlePropertyConfirmation = (e) => {
-    console.log(newVehicleProperty);
-    // if (e.target.name === 'charge-limit') {
-    //   setChargeLimit(newChargeLimit);
-    // } else if (e.target.name === 'amperage') {
-    //   setAmperage(newAmperage);
-    // }
+  const handlePropertyConfirmation = () => {
+    updateProperty(targetProperty, newVehicleProperty[targetProperty]);
   };
 
   return (

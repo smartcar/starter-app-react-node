@@ -41,12 +41,12 @@ app.get('/exchange', async function(req, res) {
     const access = await client.exchangeCode(code)
     // we'll store the access object as a jwt in a session cookie
     // in a production app you'll want to store it in some kind of persistent storage 
-    // and handle refreshing the token, which expires in 2 hrs https://smartcar.com/docs/api/#refresh-token-exchange
+    // and handle refreshing the token, which expires after 2 hrs https://smartcar.com/docs/api/#refresh-token-exchange
     const accessToken = jwt.sign(
       access,
       process.env.JWT_SECRET_KEY,
     )
-    res.cookie('chargeUp', accessToken, {
+    res.cookie('my-starter-app', accessToken, {
       expires: 0, // makes this a session cookie
       path: '/',
       httpOnly: true,
@@ -57,7 +57,6 @@ app.get('/exchange', async function(req, res) {
     res.status(200).json({ message: 'success' });
   } catch (err) {
     const message = err.message || 'Failed to exchange code for access token';
-    // client is not receiving this custom error message for some reason
     res.status(500).json({error: message})
   }
 });
@@ -66,8 +65,11 @@ app.get('/vehicles', authenticate, async function(req, res) {
   try {
     let vehicles = [];
     let selectedVehicle = {};
+    const vehicleProperties = req.query.vehicleProperties?.split('.');
+
     // in the event some vehicles fail to disconnect, we'll return those vehicles along with this error message
     const error = req.query.error === 'disconnection-failure' ? 'Some vehicles failed to disconnect' : undefined;
+
     const { accessToken } = req.tokens;
     // get list of vehicle ids
     const { vehicles: vehicleIds } = await smartcar.getVehicles(accessToken);
@@ -75,7 +77,7 @@ app.get('/vehicles', authenticate, async function(req, res) {
     // TODO: use Promise.all for these two async calls
     if (vehicleIds.length > 0) {
       vehicles = await getVehiclesWithAttributes(vehicleIds, accessToken);
-      selectedVehicle = await getVehicleInfo(vehicles[0].id, accessToken);
+      selectedVehicle = await getVehicleInfo(vehicles[0].id, accessToken, vehicleProperties);
     }
     res.status(200).json({
       vehicles,
@@ -90,9 +92,11 @@ app.get('/vehicles', authenticate, async function(req, res) {
 
 app.get('/vehicle', authenticate, async function(req, res) {
   try {
+    const vehicleProperties = req.query.vehicleProperties?.split('.');
     const { accessToken } = req.tokens;
     const vehicleId = req.query.vehicleId;
-    const vehicleData = await getVehicleInfo(vehicleId, accessToken);
+
+    const vehicleData = await getVehicleInfo(vehicleId, accessToken, vehicleProperties);
     console.log(vehicleData);
     res.json(vehicleData);
   } catch (err) {
@@ -167,6 +171,30 @@ app.post('/vehicle/amperage', authenticate, async function(req, res) {
 
   } catch (err) {
     const message = err.message || 'Failed to set charge limit.';
+    res.status(500).json({error: message})
+  }
+})
+
+app.post('/vehicle/security', authenticate, async function(req, res) {
+  try {
+    const { action } = req.body;
+    const { accessToken } = req.tokens;
+    const vehicleId = req.query.vehicleId;
+    const vehicle = createSmartcarVehicle(vehicleId, accessToken);
+    
+    let result;
+    if (action === 'LOCK') {
+      result = await vehicle.lock();
+    } else if (action === 'UNLOCK') {
+      result = await vehicle.unlock();
+    } else {
+      throw new Error('Missing or invalid action payload in request to lock/unlock');
+    }
+    res.status(200).json({
+      message: result.message || "Successfully sent request to vehicle",
+    });
+  } catch (err) {
+    const message = err.message || 'Failed to lock/unlock.';
     res.status(500).json({error: message})
   }
 })

@@ -49,6 +49,7 @@ const getVehiclesWithAttributes = async (vehicleIds, accessToken) => {
  * @param {object} settlement
  * @param {string} path gets value at path of settled promise
  * @param {string} errorMessage custom error message if promise is rejected
+ * @param {Function} process cb function to process output
  * @returns {any}
  */
 const handleSettlement = (settlement, path, errorMessage = 'Information unavailable', process) => {
@@ -112,7 +113,11 @@ const vehicleProperties = {
   },
   chargeLimit: {
     requestName: 'chargeLimit',
-    settle: (settlement) => handleSettlement(settlement, 'limit', undefined, (limit) => Math.round((Number(limit) + Number.EPSILON) * 100) / 100),
+    settle: (settlement) => handleSettlement(
+      settlement,
+      'limit',
+      undefined,
+      (limit) => Math.round((Number(limit) + Number.EPSILON) * 100) / 100),
   },
   chargeState: {
     requestName: 'charge',

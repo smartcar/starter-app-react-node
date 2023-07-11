@@ -1,7 +1,7 @@
 /**
  * Helper function that returns smartcar vehicle instance.
  */
-const formatName = (name) => {
+export const formatName = (name) => {
   const displayNames = {
     CHARGING: 'Charging',
     FULLY_CHARGED: 'Fully charged',
@@ -15,7 +15,7 @@ const formatName = (name) => {
  * Obtains time between now and a later date
  * Returns time in hours and minutes
  */
-const timeDiff = (date) => {
+export const timeDiff = (date) => {
   const now = new Date();
   const later = new Date(date);
 
@@ -30,20 +30,11 @@ const timeDiff = (date) => {
 /**
  * Returns array of permissions from selected properties (in config)
  */
-const getPermissions = (selectedProperties, vehicleProperties) => {
-  const permissions = selectedProperties.reduce((result, property) => {
-    const permission = vehicleProperties[property].permission;
-    if (!result.includes(permission)) {
-      result.push(permission);
-    }
-    return result;
-  }, []);
+export const getPermissions = (selectedProperties, vehicleProperties) => {
+  const requests = selectedProperties.map(
+    (vehicleProperty) => vehicleProperties[vehicleProperty].permission
+  );
+  const permissions = [...new Set(requests)];
 
   return permissions;
-};
-
-module.exports = {
-  formatName,
-  timeDiff,
-  getPermissions,
 };

@@ -25,7 +25,15 @@ const Vehicle = ({
   const { amperage, chargeLimit, chargeState, id, isPluggedIn, vin } = info;
   const attributes = vehicles.find((vehicle) => vehicle.id === id);
   const { make, model, year } = attributes;
-  const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
+  const showChargeToggle =
+    isPluggedIn &&
+    chargeState !== 'FULLY_CHARGED' &&
+    config.vehicleProperties.some(
+      (property) => property.name === 'startStopCharge'
+    );
+  const showVin = config.vehicleProperties.some(
+    (property) => property.name === 'vin'
+  );
   // If enabled, stores inputs to update respective properties e.g. setAmperage
   const [newVehicleProperty, setNewVehicleProperty] = useState({
     chargeLimit: '',
@@ -113,7 +121,7 @@ const Vehicle = ({
         <Loading showText={false} />
       ) : (
         <>
-          <p>{vin}</p>
+          {showVin && <p>{vin}</p>}
           {showChargeToggle && (
             <div>
               <button

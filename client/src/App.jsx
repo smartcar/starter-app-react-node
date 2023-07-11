@@ -3,7 +3,7 @@ import Smartcar from '@smartcar/auth';
 import api from './api';
 import './App.css';
 import { getPermissions } from './utils';
-import { vehicleProperties, buildYourOwnConfig } from './config';
+import { config } from './config';
 
 import { Connect, Vehicle, Loading } from './components';
 
@@ -35,17 +35,12 @@ const App = () => {
     }
   };
 
-  const selectedPermissions = getPermissions(
-    buildYourOwnConfig.vehicleProperties,
-    vehicleProperties
-  );
-
   const smartcar = new Smartcar({
     clientId: process.env.REACT_APP_CLIENT_ID,
     redirectUri: process.env.REACT_APP_REDIRECT_URI,
     // set scope of permissions: https://smartcar.com/docs/api/#permissions
-    scope: ['read_vehicle_info', ...selectedPermissions],
-    mode: buildYourOwnConfig.mode, // one of ['live', 'test', 'simulated']
+    scope: ['read_vehicle_info', ...getPermissions()],
+    mode: config.mode, // one of ['live', 'test', 'simulated']
     onComplete,
   });
 
@@ -54,12 +49,12 @@ const App = () => {
       forcePrompt: true,
       // bypass car brand selection screen: https://smartcar.com/docs/api#brand-select
       vehicleInfo: {
-        make: buildYourOwnConfig.brandSelect,
+        make: config.brandSelect,
       },
       // only allow users to authenticate ONE vehicle
-      singleSelect: buildYourOwnConfig.singleSelect,
+      singleSelect: config.singleSelect,
       // only allow users to authenticate ONE vehicle specified by VIN
-      singleSelectVin: buildYourOwnConfig.singleSelectVin,
+      singleSelectVin: config.singleSelectVin,
     });
 
   const disconnect = async (e) => {
@@ -126,7 +121,7 @@ const App = () => {
   return (
     <div className="content-wrapper">
       <div className="content">
-        <h1>{buildYourOwnConfig.staticText.appName}</h1>
+        <h1>{config.staticText.appName}</h1>
         {isLoading && <Loading />}
         {!isLoading &&
           (Object.keys(selectedVehicle).length !== 0 ? (

@@ -129,15 +129,15 @@ export const vehicleProperties = {
   },
 };
 
-export const energyConfig = {
+const energyConfig = {
   staticText: {
     appName: 'ChargeUp',
   },
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
-  singleSelect: true,
-  singleSelectVin: '??? if this is easy?',
+  singleSelect: false,
+  singleSelectVin: '',
   // required endpoints attributes, we already included this for you, no action needed from you
   vehicleProperties: [
     //need to match the keys in the root config, the order will dictate the order of the UI components
@@ -157,7 +157,7 @@ export const energyConfig = {
   ],
 };
 
-export const buildYourOwnConfig = {
+const buildYourOwnConfig = {
   staticText: {
     appName: 'Your App name',
   },
@@ -172,3 +172,5 @@ export const buildYourOwnConfig = {
     // does it look better with the full list of possible vehicle properties and have the developer comment out / delete or start with an empty array and have they build their own
   ],
 };
+
+export const config = energyConfig;

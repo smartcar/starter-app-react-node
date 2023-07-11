@@ -51,17 +51,23 @@ const getVehiclesWithAttributes = async (vehicleIds, accessToken) => {
  * @param {string} errorMessage custom error message if promise is rejected
  * @returns {any}
  */
-const handleSettlement = (settlement, path, errorMessage = 'Information unavailable') => {
+const handleSettlement = (settlement, path, errorMessage = 'Information unavailable', process) => {
   if (settlement.status === 'rejected') {
     // TODO: Implement backend error handling with settlement.reason 
     return {error: errorMessage}
   }
+  let value;
   // use lodash to get nested fields
   if (path) {
-    return get(settlement.value, path)
+    value = get(settlement.value, path);
+  } else {
+    let { meta, ...remainingValue } = settlement.value;
+    value = remainingValue;
   }
-  // filter out "meta" field
-  const { meta, ...value } = settlement.value;
+
+  if (process) {
+    value = process(value);
+  }
   return value;
 }
 
@@ -106,7 +112,7 @@ const vehicleProperties = {
   },
   chargeLimit: {
     requestName: 'chargeLimit',
-    settle: (settlement) => handleSettlement(settlement, 'limit'),
+    settle: (settlement) => handleSettlement(settlement, 'limit', undefined, (limit) => Math.round((Number(limit) + Number.EPSILON) * 100) / 100),
   },
   chargeState: {
     requestName: 'charge',
@@ -164,12 +170,16 @@ const vehicleProperties = {
 const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = []) => {
   const vehicle = createSmartcarVehicle(vehicleId, accessToken);
   const requests = requestedProperties.map(vehicleProperty => vehicleProperties[vehicleProperty].requestName);
+  // avoid making the same requests more than once
   const uniqueRequests = [...new Set(requests)];
   const vehiclePromises = uniqueRequests.map(request => promiseGenerator(vehicle, request));
   const settlements = await Promise.allSettled(vehiclePromises);
+  
+  // map each request to its settlement
   const requestToSettlement = {};
   uniqueRequests.forEach((request, index) => requestToSettlement[request] = settlements[index]);
 
+  // map each request vehicle property to the corresponding request and settlement, provide instructions to settle
   const vehicleInfo = { id: vehicleId};
   requestedProperties.forEach(requestedProperty => {
     const vehicleProperty = vehicleProperties[requestedProperty];

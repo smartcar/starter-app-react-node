@@ -54,7 +54,7 @@ const properties = {
     name: 'chargeState',
     permission: 'read_charge',
     requestType: 'GET',
-    componentType: 'ChargeState',
+    componentType: 'VehicleProperty',
     text: 'Current state',
   },
   engineOil: {

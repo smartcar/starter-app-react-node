@@ -173,6 +173,30 @@ app.post('/vehicle/amperage', authenticate, async function(req, res) {
   }
 })
 
+app.post('/vehicle/security', authenticate, async function(req, res) {
+  try {
+    const { action } = req.body;
+    const { accessToken } = req.tokens;
+    const vehicleId = req.query.vehicleId;
+    const vehicle = createSmartcarVehicle(vehicleId, accessToken);
+    
+    let result;
+    if (action === 'LOCK') {
+      result = await vehicle.lock();
+    } else if (action === 'UNLOCK') {
+      result = await vehicle.unlock();
+    } else {
+      throw new Error('Missing or invalid action payload in request to lock/unlock');
+    }
+    res.status(200).json({
+      message: result.message || "Successfully sent request to vehicle",
+    });
+  } catch (err) {
+    const message = err.message || 'Failed to lock/unlock.';
+    res.status(500).json({error: message})
+  }
+})
+
 app.delete('/vehicle', authenticate, async function(req, res) {
   try {
     const { accessToken } = req.tokens;

@@ -20,11 +20,11 @@ const createSmartcarVehicle = (
 };
 
 const getAccess = (req) => {
-  const accessCookie = req.cookies?.chargeUp;
+  const accessCookie = req.cookies?.['my-starter-app'];
   if (!accessCookie) {
     throw new Error('Access token missing in cookie');
   }
-  // Decode the "chargeUp" cookie value
+  // Decode the "my-starter-app" cookie value
   const access = jwt.verify(
     accessCookie,
     process.env.JWT_SECRET_KEY,

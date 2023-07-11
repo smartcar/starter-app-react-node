@@ -1,4 +1,4 @@
-export const properties = {
+const properties = {
   amperage: {
     name: 'amperage',
     permission: 'read_charge',

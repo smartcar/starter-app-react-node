@@ -176,17 +176,18 @@ button.disconnect:hover {
   background-color: var(--lightPink);
 }
 
-button.charge {
-  background-color: var(--black);
-  color: var(--white);
+button.property-action {
+  background-color: var(--white);
+  color: var(--black);
   font-size: 1rem;
   min-width: 122px;
   min-height: 37px;
+  margin-right: 4px;
 }
 
-button.charge:hover {
-  background-color: var(--white);
-  color: var(--black);
+button.property-action:hover {
+  background-color: var(--black);
+  color: var(--white);
 }
 
 button.property-confirm {

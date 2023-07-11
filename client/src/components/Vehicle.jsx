@@ -9,6 +9,8 @@ import {
 import { config } from '../config';
 
 const text = {
+  lock: 'Lock',
+  unlock: 'Unlock',
   startCharge: 'Start charge',
   stopCharge: 'Stop charge',
   disconnect: 'Disconnect',
@@ -33,6 +35,9 @@ const Vehicle = ({
     );
   const showVin = config.vehicleProperties.some(
     (property) => property.name === 'vin'
+  );
+  const showLockUnlock = config.vehicleProperties.some(
+    (property) => property.name === 'lockUnlock'
   );
   // If enabled, stores inputs to update respective properties e.g. setAmperage
   const [newVehicleProperty, setNewVehicleProperty] = useState({
@@ -122,10 +127,28 @@ const Vehicle = ({
       ) : (
         <>
           {showVin && <p>{vin}</p>}
+          {showLockUnlock && (
+            <div>
+              <button
+                className="property-action"
+                name="lock"
+                onClick={(e) => updateProperty(e.target.name, 'LOCK')}
+              >
+                {text.lock}
+              </button>
+              <button
+                className="property-action"
+                name="unlock"
+                onClick={(e) => updateProperty(e.target.name, 'UNLOCK')}
+              >
+                {text.unlock}
+              </button>
+            </div>
+          )}
           {showChargeToggle && (
             <div>
               <button
-                className="charge"
+                className="property-action"
                 name="chargeState"
                 onClick={(e) =>
                   updateProperty(

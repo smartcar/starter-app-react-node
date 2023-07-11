@@ -39,11 +39,10 @@ const staticText = {
  *  Renders simple read only properties
  */
 export const VehicleProperty = ({ property, text }) => {
-  const propertyName = Object.keys(property)[0];
   return (
     <>
       <h3>{text}</h3>
-      <p>{staticText[`${propertyName}Status`](property[propertyName])}</p>
+      <p>{staticText[`${property.name}Status`](property.status)}</p>
     </>
   );
 };
@@ -77,7 +76,7 @@ export const SetVehicleProperty = ({
     <div className="editable-property">
       <input
         className="property-update"
-        name={property}
+        name={property.name}
         type="number"
         step="1"
         min="0"
@@ -86,7 +85,7 @@ export const SetVehicleProperty = ({
       />
       <button
         className="property-confirm"
-        name={property}
+        name={property.name}
         disabled={newVehicleProperty[targetProperty] === currentValue}
         onClick={handlePropertyConfirmation}
       >

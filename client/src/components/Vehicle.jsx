@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../api';
 import Loading from './Loading';
 import { SetVehicleProperty, VehicleProperty } from './Properties';
-import { config, vehicleProperties } from '../config';
+import { config } from '../config';
 
 const text = {
   startCharge: 'Start charge',
@@ -51,31 +51,27 @@ const Vehicle = ({
 
   // Map through properties listed in config and display respective information
   const properties = config.vehicleProperties.map((property) => {
-    if (vehicleProperties[property].permission === 'read_vin') {
+    if (property.permission === 'read_vin') {
       return null;
-    } else if (
-      vehicleProperties[property].componentType === 'VehicleProperty'
-    ) {
+    } else if (property.componentType === 'VehicleProperty') {
       return (
         <VehicleProperty
-          property={{ [property]: info[property] }}
+          property={{ ...property, status: info[property.name] }}
           key={property}
-          text={vehicleProperties[property].text}
+          text={property.text}
         />
       );
-    } else if (
-      vehicleProperties[property].componentType === 'SetVehicleProperty'
-    ) {
-      const { targetProperty } = vehicleProperties[property];
+    } else if (property.componentType === 'SetVehicleProperty') {
+      const { targetProperty } = property;
       return (
         <SetVehicleProperty
           property={property}
-          key={property}
+          key={property.name}
           targetProperty={targetProperty}
           currentValue={info[targetProperty]}
           newVehicleProperty={newVehicleProperty}
           setNewVehicleProperty={setNewVehicleProperty}
-          text={vehicleProperties[property].text}
+          text={property.text}
           updateProperty={updateProperty}
         />
       );

@@ -89,7 +89,6 @@ const App = () => {
           chargeLimit: data.limit,
         });
       } else if (property === 'amperage') {
-        console.log(property, action);
         const { data } = await api.setAmperage(vehicleId, action);
         setSelectedVehicle({
           ...selectedVehicle,

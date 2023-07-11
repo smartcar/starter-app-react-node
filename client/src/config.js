@@ -96,7 +96,7 @@ const properties = {
     name: 'location',
     permission: 'read_location',
     requestType: 'GET',
-    componentType: 'VehicleProperty',
+    componentType: 'VehiclePropertyList',
     text: 'Location',
   },
   lockUnlock: {
@@ -124,7 +124,7 @@ const properties = {
     name: 'tirePressure',
     permission: 'read_tires',
     requestType: 'GET',
-    componentType: 'VehicleProperty',
+    componentType: 'VehiclePropertyList',
     text: 'Tire Pressure',
   },
   vin: {

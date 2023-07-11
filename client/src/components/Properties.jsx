@@ -19,20 +19,14 @@ const staticText = {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     })} miles`,
-  latitude: (location) => `Lat: ${location.latitude.toFixed(4)}...`,
-  longitude: (location) => `Long: ${location.longitude.toFixed(4)}...`,
+  latitude: (latitude) => `Lat: ${latitude.toFixed(4)}...`,
+  longitude: (longitude) => `Long: ${longitude.toFixed(4)}...`,
   engineOilValue: (engineOil) =>
     `${(engineOil.lifeRemaining * 100).toFixed()}% remaining`,
   frontLeft: (frontLeft) => `Front left: ${frontLeft.toFixed(1)} psi`,
   frontRight: (frontRight) => `Front right: ${frontRight.toFixed(1)} psi`,
   backLeft: (backLeft) => `Back left: ${backLeft.toFixed(1)} psi`,
   backRight: (backRight) => `Back right: ${backRight.toFixed(1)} psi`,
-
-  startCharge: 'Start charge',
-  stopCharge: 'Stop charge',
-  setAmperage: 'Set new amperage',
-  disconnect: 'Disconnect',
-  disconnectAll: 'Disconnect all',
 };
 
 /**
@@ -43,6 +37,23 @@ export const VehicleProperty = ({ property, text }) => {
     <>
       <h3>{text}</h3>
       <p>{staticText[`${property.name}Status`](property.status)}</p>
+    </>
+  );
+};
+
+/**
+ *  Renders read only properties with multiple values
+ */
+export const VehiclePropertyList = ({ property, text }) => {
+  const statuses = Object.entries(property.status);
+  return (
+    <>
+      <h3>{text}</h3>
+      <ul>
+        {statuses.map((status) => (
+          <li key={status[0]}>{staticText[status[0]](status[1])}</li>
+        ))}
+      </ul>
     </>
   );
 };

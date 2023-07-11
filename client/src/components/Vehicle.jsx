@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
 import Loading from './Loading';
-import { SetVehicleProperty, VehicleProperty } from './Properties';
+import {
+  SetVehicleProperty,
+  VehicleProperty,
+  VehiclePropertyList,
+} from './Properties';
 import { config } from '../config';
 
 const text = {
@@ -57,7 +61,15 @@ const Vehicle = ({
       return (
         <VehicleProperty
           property={{ ...property, status: info[property.name] }}
-          key={property}
+          key={property.name}
+          text={property.text}
+        />
+      );
+    } else if (property.componentType === 'VehiclePropertyList') {
+      return (
+        <VehiclePropertyList
+          property={{ ...property, status: info[property.name] }}
+          key={property.name}
           text={property.text}
         />
       );

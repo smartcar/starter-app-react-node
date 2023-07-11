@@ -97,6 +97,12 @@ export const vehicleProperties = {
     componentType: 'VehicleProperty',
     text: 'Odometer',
   },
+  startStopCharge: {
+    permission: 'control_charge',
+    requestType: 'POST',
+    componentType: 'StartStopCharge',
+    text: '',
+  },
   tirePressure: {
     permission: 'read_tires',
     requestType: 'GET',

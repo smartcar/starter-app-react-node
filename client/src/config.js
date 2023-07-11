@@ -3,85 +3,87 @@ export const vehicleProperties = {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Amperage',
   },
   setAmperage: {
     permission: 'control_charge',
     requestType: 'POST',
     componentType: 'SetVehicleProperty',
-    text: 'text',
+    targetProperty: 'amperage',
+    text: 'Set new amperage',
   },
   batteryLevel: {
     permission: 'read_battery',
     requestType: 'GET',
     componentType: 'VehicleProperty', //start/stop charge, setChargeLimit ??
-    text: 'text to render UI component',
+    text: 'Battery level',
   },
   batteryCapacity: {
     permission: 'read_battery',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Capacity',
   },
   chargeCompletion: {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Time to completion',
   },
   chargeLimit: {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Charge limit',
   },
   setChargeLimit: {
     permission: 'control_charge',
     requestType: 'POST',
     componentType: 'SetVehicleProperty',
-    text: 'text',
+    targetProperty: 'chargeLimit',
+    text: 'Set new limit',
   },
   chargeState: {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'ChargeState',
-    text: 'text',
+    text: 'Current state',
   },
   engineOil: {
     permission: 'read_engine_oil',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Engine oil life',
   },
   evRange: {
     permission: 'read_battery',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Range',
   },
   fuel: {
     permission: 'read_fuel',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Fuel',
   },
   iceRange: {
     permission: 'read_fuel',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Range',
   },
   isPluggedIn: {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Plugged in',
   },
   location: {
     permission: 'read_location',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Location',
   },
   lockUnlock: {
     permission: 'control_security',
@@ -93,13 +95,19 @@ export const vehicleProperties = {
     permission: 'read_odometer',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Odometer',
+  },
+  startStopCharge: {
+    permission: 'control_charge',
+    requestType: 'POST',
+    componentType: 'StartStopCharge',
+    text: '',
   },
   tirePressure: {
     permission: 'read_tires',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Tire Pressure',
   },
   vin: {
     permission: 'read_vin',
@@ -111,52 +119,58 @@ export const vehicleProperties = {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Voltage',
   },
   wattage: {
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'Wattage',
   },
 };
-export const energyConfig = {
+
+const energyConfig = {
   staticText: {
     appName: 'ChargeUp',
   },
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
-  singleSelect: true,
-  singleSelectVin: '??? if this is easy?',
+  singleSelect: false,
+  singleSelectVin: '',
   // required endpoints attributes, we already included this for you, no action needed from you
   vehicleProperties: [
     //need to match the keys in the root config, the order will dictate the order of the UI components
-    'amperage',
-    'batteryLevel',
-    'batteryCapacity',
-    'chargeCompletion',
-    'chargeLimit',
-    'chargeState',
     'isPluggedIn',
+    'chargeState',
+    'chargeCompletion',
+    'batteryLevel',
     'evRange',
-    'vin',
+    'chargeLimit',
+    'setChargeLimit',
+    'batteryCapacity',
     'voltage',
     'wattage',
+    'amperage',
+    'setAmperage',
+    'vin',
   ],
 };
-export const buildYourOwnConfig = {
+
+const buildYourOwnConfig = {
   staticText: {
     appName: 'Your App name',
   },
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
-  brandSelect: 'TESLA',
-  singleSelect: true,
-  singleSelectVin: '??? if this is easy?',
+  brandSelect: '',
+  singleSelect: false,
+  singleSelectVin: '',
   // required endpoints attributes, we already included this for you, no action needed from you
   vehicleProperties: [
     //need to match the keys in the root config, the order will dictate the order of the UI components
     // does it look better with the full list of possible vehicle properties and have the developer comment out / delete or start with an empty array and have they build their own
   ],
 };
+
+export const config = energyConfig;

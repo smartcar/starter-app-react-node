@@ -65,7 +65,7 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
   return value;
 }
 
-const promiseGenerator = (vehicle, request) => {
+const promiseGenerator = (vehicle, requestName) => {
   const requestMap = {
     amperage: vehicle.request('GET', 'tesla/charge/ammeter'),
     battery: vehicle.battery(),
@@ -73,12 +73,16 @@ const promiseGenerator = (vehicle, request) => {
     charge: vehicle.charge(),
     chargeCompletion: vehicle.request('GET', 'tesla/charge/completion'),
     chargeLimit: vehicle.getChargeLimit(),
+    engineOil: vehicle.engineOil(),
     fuelTank: vehicle.fuel(),
+    location: vehicle.location(),
+    odometer: vehicle.odometer(),
+    tirePressure: vehicle.tirePressure(),
     vin: vehicle.vin(),
     voltage: vehicle.request('GET', 'tesla/charge/voltmeter'),
     wattage: vehicle.request('GET', 'tesla/charge/wattmeter'),
   }
-  return requestMap[request];
+  return requestMap[requestName];
 }
 
 const vehicleProperties = {
@@ -108,9 +112,17 @@ const vehicleProperties = {
     requestName: 'charge',
     settle: (settlement) => handleSettlement(settlement, 'state'),
   },
+  engineOil: {
+    requestName: 'engineOil',
+    settle: (settlement) => handleSettlement(settlement, 'lifeRemaining'),
+  },
   evRange: {
     requestName: 'battery',
     settle: (settlement) => handleSettlement(settlement, 'range'),
+  },
+  fuel: {
+    requestName: 'fuelTank',
+    settle: (settlement) => handleSettlement(settlement),
   },
   iceRange: {
     requestName: 'fuelTank',
@@ -119,6 +131,18 @@ const vehicleProperties = {
   isPluggedIn: {
     requestName: 'charge',
     settle: (settlement) => handleSettlement(settlement, 'isPluggedIn'),
+  },
+  location: {
+    requestName: 'location',
+    settle: (settlement) => handleSettlement(settlement),
+  },
+  odometer: {
+    requestName: 'odometer',
+    settle: (settlement) => handleSettlement(settlement, 'distance'),
+  },
+  tirePressure: {
+    requestName: 'tirePressure',
+    settle: (settlement) => handleSettlement(settlement),
   },
   vin: {
     requestName: 'vin',

@@ -22,7 +22,7 @@ const Vehicle = ({
   setSelectedVehicle,
   updateProperty,
 }) => {
-  const { amperage, chargeLimit, chargeState, id, isPluggedIn, vin } = info;
+  const { amperage, chargeLimit, chargeState, id, isPluggedIn } = info;
   const attributes = vehicles.find((vehicle) => vehicle.id === id);
   const { make, model, year } = attributes;
   const showChargeToggle =
@@ -31,9 +31,6 @@ const Vehicle = ({
     config.vehicleProperties.some(
       (property) => property.name === 'startStopCharge'
     );
-  const showVin = config.vehicleProperties.some(
-    (property) => property.name === 'vin'
-  );
   const showLockUnlock = config.vehicleProperties.some(
     (property) => property.name === 'lockUnlock'
   );
@@ -66,9 +63,7 @@ const Vehicle = ({
 
   // Map through properties listed in config and display respective information
   const properties = config.vehicleProperties.map((property) => {
-    if (property.permission === 'read_vin') {
-      return null;
-    } else if (property.componentType === 'VehicleProperty') {
+    if (property.componentType === 'VehicleProperty') {
       return (
         <VehicleProperty
           property={{ ...property, status: info[property.name] }}
@@ -127,7 +122,6 @@ const Vehicle = ({
         <Loading showText={false} />
       ) : (
         <>
-          {showVin && <p>{vin}</p>}
           {showLockUnlock && <LockUnlock updateProperty={updateProperty} />}
           {showChargeToggle && (
             <StartStopCharge

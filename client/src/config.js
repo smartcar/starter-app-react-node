@@ -132,7 +132,7 @@ const properties = {
     permission: 'read_vin',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'VIN',
   },
   voltage: {
     name: 'voltage',

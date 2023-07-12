@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatName, timeDiff } from '../utils';
+import { config } from '../config';
 
 const staticText = {
   vin: (status) => status,
@@ -34,9 +35,74 @@ const staticText = {
 };
 
 /**
+ *  Map through properties listed in config and display respective information
+ */
+export const Properties = ({
+  info,
+  newVehicleProperty,
+  setNewVehicleProperty,
+  updateProperty,
+}) => {
+  const { chargeState, isPluggedIn } = info;
+  const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
+
+  const properties = config.vehicleProperties.map((property) => {
+    if (property.componentType === 'VehicleProperty') {
+      return (
+        <VehicleProperty
+          property={{ ...property, status: info[property.name] }}
+          key={property.name}
+          text={property.text}
+        />
+      );
+    } else if (property.componentType === 'VehiclePropertyList') {
+      return (
+        <VehiclePropertyList
+          property={{ ...property, status: info[property.name] }}
+          key={property.name}
+          text={property.text}
+        />
+      );
+    } else if (property.componentType === 'SetVehicleProperty') {
+      const { targetProperty } = property;
+      return (
+        info[targetProperty] && (
+          <SetVehicleProperty
+            property={property}
+            key={property.name}
+            targetProperty={targetProperty}
+            currentValue={info[targetProperty]}
+            newVehicleProperty={newVehicleProperty}
+            setNewVehicleProperty={setNewVehicleProperty}
+            text={property.text}
+            updateProperty={updateProperty}
+          />
+        )
+      );
+    } else if (property.componentType === 'LockUnlock') {
+      return <LockUnlock updateProperty={updateProperty} />;
+    } else if (
+      property.componentType === 'StartStopCharge' &&
+      showChargeToggle
+    ) {
+      return (
+        <StartStopCharge
+          updateProperty={updateProperty}
+          chargeState={chargeState}
+        />
+      );
+    } else {
+      return null;
+    }
+  });
+
+  return properties;
+};
+
+/**
  *  Renders simple read only properties
  */
-export const VehicleProperty = ({ property, text }) => {
+const VehicleProperty = ({ property, text }) => {
   return (
     <>
       <h3>{text}</h3>
@@ -48,7 +114,7 @@ export const VehicleProperty = ({ property, text }) => {
 /**
  *  Renders read only properties with multiple values
  */
-export const VehiclePropertyList = ({ property, text }) => {
+const VehiclePropertyList = ({ property, text }) => {
   const statuses = Object.entries(property.status);
   return (
     <>
@@ -65,7 +131,7 @@ export const VehiclePropertyList = ({ property, text }) => {
 /**
  *  Renders inputs to update a target property e.g. setChargeLimit -> chargeLimit
  */
-export const SetVehicleProperty = ({
+const SetVehicleProperty = ({
   property,
   targetProperty,
   currentValue,
@@ -113,7 +179,7 @@ export const SetVehicleProperty = ({
 /**
  *  Renders lock/unlock buttons
  */
-export const LockUnlock = ({ updateProperty }) => {
+const LockUnlock = ({ updateProperty }) => {
   return (
     <div className="temporary-property">
       <button
@@ -137,7 +203,7 @@ export const LockUnlock = ({ updateProperty }) => {
 /**
  *  Renders start/stop charge button
  */
-export const StartStopCharge = ({ updateProperty, chargeState }) => {
+const StartStopCharge = ({ updateProperty, chargeState }) => {
   return (
     <div className="temporary-property">
       <button

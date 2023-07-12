@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
 import Loading from './Loading';
-import { config } from '../config';
-import {
-  LockUnlock,
-  SetVehicleProperty,
-  StartStopCharge,
-  VehicleProperty,
-  VehiclePropertyList,
-} from './Properties';
+import { Properties } from './Properties';
 
 const text = {
   disconnect: 'Disconnect',
@@ -22,15 +15,9 @@ const Vehicle = ({
   setSelectedVehicle,
   updateProperty,
 }) => {
-  const { amperage, chargeLimit, chargeState, id, isPluggedIn } = info;
+  const { amperage, chargeLimit, id } = info;
   const attributes = vehicles.find((vehicle) => vehicle.id === id);
   const { make, model, year } = attributes;
-  const showChargeToggle =
-    isPluggedIn &&
-    chargeState !== 'FULLY_CHARGED' &&
-    config.vehicleProperties.some(
-      (property) => property.name === 'startStopCharge'
-    );
   // If enabled, stores inputs to update respective properties e.g. setAmperage
   const [newVehicleProperty, setNewVehicleProperty] = useState({
     chargeLimit: '',
@@ -58,57 +45,6 @@ const Vehicle = ({
     setSelectedVehicle(data);
   };
 
-  // Map through properties listed in config and display respective information
-  const properties = config.vehicleProperties.map((property) => {
-    if (property.componentType === 'VehicleProperty') {
-      return (
-        <VehicleProperty
-          property={{ ...property, status: info[property.name] }}
-          key={property.name}
-          text={property.text}
-        />
-      );
-    } else if (property.componentType === 'VehiclePropertyList') {
-      return (
-        <VehiclePropertyList
-          property={{ ...property, status: info[property.name] }}
-          key={property.name}
-          text={property.text}
-        />
-      );
-    } else if (property.componentType === 'SetVehicleProperty') {
-      const { targetProperty } = property;
-      return (
-        info[targetProperty] && (
-          <SetVehicleProperty
-            property={property}
-            key={property.name}
-            targetProperty={targetProperty}
-            currentValue={info[targetProperty]}
-            newVehicleProperty={newVehicleProperty}
-            setNewVehicleProperty={setNewVehicleProperty}
-            text={property.text}
-            updateProperty={updateProperty}
-          />
-        )
-      );
-    } else if (property.componentType === 'LockUnlock') {
-      return <LockUnlock updateProperty={updateProperty} />;
-    } else if (
-      property.componentType === 'StartStopCharge' &&
-      showChargeToggle
-    ) {
-      return (
-        <StartStopCharge
-          updateProperty={updateProperty}
-          chargeState={chargeState}
-        />
-      );
-    } else {
-      return null;
-    }
-  });
-
   return (
     <div className="container vehicle">
       {/* Renders a select dropdown if multiple vehicles are connected */}
@@ -131,7 +67,14 @@ const Vehicle = ({
         <Loading showText={false} />
       ) : (
         <>
-          <div className="container stats">{properties}</div>
+          <div className="container stats">
+            <Properties
+              info={info}
+              newVehicleProperty={newVehicleProperty}
+              setNewVehicleProperty={setNewVehicleProperty}
+              updateProperty={updateProperty}
+            />
+          </div>
           <div>
             <button
               className="disconnect"

@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 import api from '../api';
 import Loading from './Loading';
 import {
+  LockUnlock,
   SetVehicleProperty,
+  StartStopCharge,
   VehicleProperty,
   VehiclePropertyList,
 } from './Properties';
 import { config } from '../config';
 
 const text = {
-  lock: 'Lock',
-  unlock: 'Unlock',
-  startCharge: 'Start charge',
-  stopCharge: 'Stop charge',
   disconnect: 'Disconnect',
   disconnectAll: 'Disconnect all',
 };
@@ -127,41 +125,12 @@ const Vehicle = ({
       ) : (
         <>
           {showVin && <p>{vin}</p>}
-          {showLockUnlock && (
-            <div>
-              <button
-                className="property-action"
-                name="security"
-                onClick={(e) => updateProperty(e.target.name, 'LOCK')}
-              >
-                {text.lock}
-              </button>
-              <button
-                className="property-action"
-                name="security"
-                onClick={(e) => updateProperty(e.target.name, 'UNLOCK')}
-              >
-                {text.unlock}
-              </button>
-            </div>
-          )}
+          {showLockUnlock && <LockUnlock updateProperty={updateProperty} />}
           {showChargeToggle && (
-            <div>
-              <button
-                className="property-action"
-                name="chargeState"
-                onClick={(e) =>
-                  updateProperty(
-                    e.target.name,
-                    chargeState === 'CHARGING' ? 'STOP' : 'START'
-                  )
-                }
-              >
-                {chargeState === 'CHARGING'
-                  ? text.stopCharge
-                  : text.startCharge}
-              </button>
-            </div>
+            <StartStopCharge
+              updateProperty={updateProperty}
+              chargeState={chargeState}
+            />
           )}
           <div className="container stats">{properties}</div>
           <div>

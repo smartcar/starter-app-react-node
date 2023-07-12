@@ -26,6 +26,10 @@ const staticText = {
   frontRight: (frontRight) => `Front right: ${frontRight.toFixed(1)} psi`,
   backLeft: (backLeft) => `Back left: ${backLeft.toFixed(1)} psi`,
   backRight: (backRight) => `Back right: ${backRight.toFixed(1)} psi`,
+  lock: 'Lock',
+  unlock: 'Unlock',
+  startCharge: 'Start charge',
+  stopCharge: 'Stop charge',
 };
 
 /**
@@ -100,6 +104,54 @@ export const SetVehicleProperty = ({
         onClick={handlePropertyConfirmation}
       >
         {text}
+      </button>
+    </div>
+  );
+};
+
+/**
+ *  Renders lock/unlock buttons
+ */
+export const LockUnlock = ({ updateProperty }) => {
+  return (
+    <div>
+      <button
+        className="property-action"
+        name="security"
+        onClick={(e) => updateProperty(e.target.name, 'LOCK')}
+      >
+        {staticText.lock}
+      </button>
+      <button
+        className="property-action"
+        name="security"
+        onClick={(e) => updateProperty(e.target.name, 'UNLOCK')}
+      >
+        {staticText.unlock}
+      </button>
+    </div>
+  );
+};
+
+/**
+ *  Renders start/stop charge button
+ */
+export const StartStopCharge = ({ updateProperty, chargeState }) => {
+  return (
+    <div>
+      <button
+        className="property-action"
+        name="chargeState"
+        onClick={(e) =>
+          updateProperty(
+            e.target.name,
+            chargeState === 'CHARGING' ? 'STOP' : 'START'
+          )
+        }
+      >
+        {chargeState === 'CHARGING'
+          ? staticText.stopCharge
+          : staticText.startCharge}
       </button>
     </div>
   );

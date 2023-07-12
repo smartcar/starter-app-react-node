@@ -2,26 +2,26 @@ import React from 'react';
 import { formatName, timeDiff } from '../utils';
 
 const staticText = {
-  isPluggedInStatus: (status) => (status ? 'Yes' : 'No'),
-  chargeStateStatus: (status) => formatName(status),
-  chargeCompletionStatus: (status) => timeDiff(status),
-  batteryLevelStatus: (status) => `${status * 100}%`,
-  evRangeStatus: (status) => `${status} miles`,
-  chargeLimitStatus: (status) => `${status * 100}%`,
-  batteryCapacityStatus: (status) => `${status} kilowatt-hours`,
-  voltageStatus: (status) => `${status} volts`,
-  wattageStatus: (status) => `${status} kilowatts`,
-  amperageStatus: (status) => `${status} amperes`,
-  odometerStatus: (distance) =>
+  isPluggedIn: (status) => (status ? 'Yes' : 'No'),
+  chargeState: (status) => formatName(status),
+  chargeCompletion: (status) => timeDiff(status),
+  batteryLevel: (status) => `${status * 100}%`,
+  evRange: (status) => `${status} miles`,
+  chargeLimit: (status) => `${status * 100}%`,
+  batteryCapacity: (status) => `${status} kilowatt-hours`,
+  voltage: (status) => `${status} volts`,
+  wattage: (status) => `${status} kilowatts`,
+  amperage: (status) => `${status} amperes`,
+  odometer: (distance) =>
     `${distance.toLocaleString('en-US', {
       style: 'decimal',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     })} miles`,
-  fuelStatus: (status) => `${status.amountRemaining} gallons`,
+  fuel: (status) => `${status.amountRemaining} gallons`,
   latitude: (latitude) => `Lat: ${latitude.toFixed(4)}...`,
   longitude: (longitude) => `Long: ${longitude.toFixed(4)}...`,
-  engineOilStatus: (engineOil) => `${(engineOil * 100).toFixed()}% remaining`,
+  engineOil: (engineOil) => `${(engineOil * 100).toFixed()}% remaining`,
   frontLeft: (frontLeft) => `Front left: ${frontLeft.toFixed(1)} psi`,
   frontRight: (frontRight) => `Front right: ${frontRight.toFixed(1)} psi`,
   backLeft: (backLeft) => `Back left: ${backLeft.toFixed(1)} psi`,
@@ -35,7 +35,7 @@ export const VehicleProperty = ({ property, text }) => {
   return (
     <>
       <h3>{text}</h3>
-      <p>{staticText[`${property.name}Status`](property.status)}</p>
+      <p>{staticText[property.name](property.status)}</p>
     </>
   );
 };

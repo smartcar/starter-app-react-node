@@ -74,21 +74,21 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
 
 const promiseGenerator = (vehicle, requestName) => {
   const requestMap = {
-    amperage: vehicle.request('GET', 'tesla/charge/ammeter'),
-    battery: vehicle.battery(),
-    batteryCapacity: vehicle.batteryCapacity(),
-    charge: vehicle.charge(),
-    chargeCompletion: vehicle.request('GET', 'tesla/charge/completion'),
-    chargeLimit: vehicle.getChargeLimit(),
-    engineOil: vehicle.engineOil(),
-    fuelTank: vehicle.fuel(),
-    location: vehicle.location(),
-    odometer: vehicle.odometer(),
-    tirePressure: vehicle.tirePressure(),
-    vin: vehicle.vin(),
-    voltage: vehicle.request('GET', 'tesla/charge/voltmeter'),
-    wattage: vehicle.request('GET', 'tesla/charge/wattmeter'),
-  }
+    amperage: () => vehicle.request('GET', 'tesla/charge/ammeter'),
+    battery: () => vehicle.battery(),
+    batteryCapacity: () => vehicle.batteryCapacity(),
+    charge: () => vehicle.charge(),
+    chargeCompletion: () => vehicle.request('GET', 'tesla/charge/completion'),
+    chargeLimit: () => vehicle.getChargeLimit(),
+    engineOil: () => vehicle.engineOil(),
+    fuelTank: () => vehicle.fuel(),
+    location: () => vehicle.location(),
+    odometer: () => vehicle.odometer(),
+    tirePressure: () => vehicle.tirePressure(),
+    vin: () => vehicle.vin(),
+    voltage: () => vehicle.request('GET', 'tesla/charge/voltmeter'),
+    wattage: () => vehicle.request('GET', 'tesla/charge/wattmeter'),
+  };
   return requestMap[requestName];
 }
 
@@ -177,7 +177,7 @@ const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = []) 
   const requests = requestedProperties.map(vehicleProperty => vehicleProperties[vehicleProperty].requestName);
   // avoid making the same requests more than once
   const uniqueRequests = [...new Set(requests)];
-  const vehiclePromises = uniqueRequests.map(request => promiseGenerator(vehicle, request));
+  const vehiclePromises = uniqueRequests.map(request => promiseGenerator(vehicle, request)());
   const settlements = await Promise.allSettled(vehiclePromises);
   
   // map each request to its settlement

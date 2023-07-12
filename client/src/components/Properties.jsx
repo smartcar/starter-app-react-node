@@ -18,10 +18,10 @@ const staticText = {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     })} miles`,
+  fuelStatus: (status) => `${status.amountRemaining} gallons`,
   latitude: (latitude) => `Lat: ${latitude.toFixed(4)}...`,
   longitude: (longitude) => `Long: ${longitude.toFixed(4)}...`,
-  engineOilValue: (engineOil) =>
-    `${(engineOil.lifeRemaining * 100).toFixed()}% remaining`,
+  engineOilStatus: (engineOil) => `${(engineOil * 100).toFixed()}% remaining`,
   frontLeft: (frontLeft) => `Front left: ${frontLeft.toFixed(1)} psi`,
   frontRight: (frontRight) => `Front right: ${frontRight.toFixed(1)} psi`,
   backLeft: (backLeft) => `Back left: ${backLeft.toFixed(1)} psi`,

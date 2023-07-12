@@ -80,7 +80,7 @@ export const Properties = ({
         )
       );
     } else if (property.componentType === 'LockUnlock') {
-      return <LockUnlock updateProperty={updateProperty} />;
+      return <LockUnlock updateProperty={updateProperty} key={property.name} />;
     } else if (
       property.componentType === 'StartStopCharge' &&
       showChargeToggle
@@ -89,6 +89,7 @@ export const Properties = ({
         <StartStopCharge
           updateProperty={updateProperty}
           chargeState={chargeState}
+          key={property.name}
         />
       );
     } else {

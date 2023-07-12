@@ -12,8 +12,7 @@ const staticText = {
   voltageStatus: (status) => `${status} volts`,
   wattageStatus: (status) => `${status} kilowatts`,
   amperageStatus: (status) => `${status} amperes`,
-
-  odometerValue: (distance) =>
+  odometerStatus: (distance) =>
     `${distance.toLocaleString('en-US', {
       style: 'decimal',
       minimumFractionDigits: 0,

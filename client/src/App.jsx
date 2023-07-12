@@ -94,6 +94,9 @@ const App = () => {
           ...selectedVehicle,
           amperage: data.amperage,
         });
+      } else if (property === 'security') {
+        const { data } = await api.security(vehicleId, action);
+        console.log(data.message);
       }
       setError(null);
     } catch (error) {

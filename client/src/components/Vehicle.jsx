@@ -131,14 +131,14 @@ const Vehicle = ({
             <div>
               <button
                 className="property-action"
-                name="lock"
+                name="security"
                 onClick={(e) => updateProperty(e.target.name, 'LOCK')}
               >
                 {text.lock}
               </button>
               <button
                 className="property-action"
-                name="unlock"
+                name="security"
                 onClick={(e) => updateProperty(e.target.name, 'UNLOCK')}
               >
                 {text.unlock}

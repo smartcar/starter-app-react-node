@@ -6,7 +6,7 @@ let api = {};
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER,
   // Allows cookies to be sent.
-  withCredentials: true
+  withCredentials: true,
 });
 
 api.axiosInstance = instance;
@@ -18,11 +18,9 @@ api.exchangeCode = async (code) => {
 
 api.getVehicles = async () => {
   const vehicleProperties = getReadProperties().join('.');
-  const { data } = await instance.get(`/vehicles`,
-    {
-      params: { vehicleProperties },
-    }
-  );
+  const { data } = await instance.get(`/vehicles`, {
+    params: { vehicleProperties },
+  });
   return data;
 };
 
@@ -32,7 +30,7 @@ api.getVehicle = async (vehicleId) => {
     params: {
       vehicleId,
       vehicleProperties,
-    }
+    },
   });
   return data;
 };
@@ -42,7 +40,7 @@ api.controlCharge = async (vehicleId, action) => {
     '/vehicle/charge',
     { action },
     {
-      params: { vehicleId }
+      params: { vehicleId },
     }
   );
 };
@@ -52,7 +50,7 @@ api.setChargeLimit = async (vehicleId, limit) => {
     '/vehicle/charge-limit',
     { limit },
     {
-      params: { vehicleId }
+      params: { vehicleId },
     }
   );
 };
@@ -62,14 +60,24 @@ api.setAmperage = async (vehicleId, amperage) => {
     '/vehicle/amperage',
     { amperage },
     {
-      params: { vehicleId }
+      params: { vehicleId },
+    }
+  );
+};
+
+api.security = async (vehicleId, action) => {
+  return await instance.post(
+    '/vehicle/security',
+    { action },
+    {
+      params: { vehicleId },
     }
   );
 };
 
 api.disconnect = async (vehicleId) => {
   return await instance.delete('/vehicle', {
-    params: { vehicleId }
+    params: { vehicleId },
   });
 };
 

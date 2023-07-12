@@ -32,6 +32,8 @@ const staticText = {
   unlock: 'Unlock',
   startCharge: 'Start charge',
   stopCharge: 'Stop charge',
+  disconnect: 'Disconnect',
+  disconnectAll: 'Disconnect all',
 };
 
 /**
@@ -42,6 +44,8 @@ export const Properties = ({
   newVehicleProperty,
   setNewVehicleProperty,
   updateProperty,
+  vehicles,
+  disconnect,
 }) => {
   const { chargeState, isPluggedIn } = info;
   const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
@@ -89,6 +93,14 @@ export const Properties = ({
         <StartStopCharge
           updateProperty={updateProperty}
           chargeState={chargeState}
+          key={property.name}
+        />
+      );
+    } else if (property.componentType === 'Disconnect') {
+      return (
+        <Disconnect
+          vehicles={vehicles}
+          disconnect={disconnect}
           key={property.name}
         />
       );
@@ -221,6 +233,28 @@ const StartStopCharge = ({ updateProperty, chargeState }) => {
           ? staticText.stopCharge
           : staticText.startCharge}
       </button>
+    </div>
+  );
+};
+
+/**
+ *  Renders disconnect/disconnect all button
+ */
+const Disconnect = ({ vehicles, disconnect }) => {
+  return (
+    <div>
+      <button className="disconnect" name="disconnect" onClick={disconnect}>
+        {staticText.disconnect}
+      </button>
+      {vehicles.length > 1 && (
+        <button
+          className="disconnect"
+          name="disconnectAll"
+          onClick={disconnect}
+        >
+          {staticText.disconnectAll}
+        </button>
+      )}
     </div>
   );
 };

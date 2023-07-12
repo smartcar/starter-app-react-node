@@ -3,11 +3,6 @@ import api from '../api';
 import Loading from './Loading';
 import { Properties } from './Properties';
 
-const text = {
-  disconnect: 'Disconnect',
-  disconnectAll: 'Disconnect all',
-};
-
 const Vehicle = ({
   info,
   disconnect,
@@ -73,25 +68,9 @@ const Vehicle = ({
               newVehicleProperty={newVehicleProperty}
               setNewVehicleProperty={setNewVehicleProperty}
               updateProperty={updateProperty}
+              vehicles={vehicles}
+              disconnect={disconnect}
             />
-          </div>
-          <div>
-            <button
-              className="disconnect"
-              name="disconnect"
-              onClick={disconnect}
-            >
-              {text.disconnect}
-            </button>
-            {vehicles.length > 1 && (
-              <button
-                className="disconnect"
-                name="disconnectAll"
-                onClick={disconnect}
-              >
-                {text.disconnectAll}
-              </button>
-            )}
           </div>
         </>
       )}

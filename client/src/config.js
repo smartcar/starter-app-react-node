@@ -42,6 +42,13 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Charge limit',
   },
+  disconnect: {
+    name: 'disconnect',
+    permission: '',
+    requestType: 'DELETE',
+    componentType: 'Disconnect',
+    text: '',
+  },
   setChargeLimit: {
     name: 'setChargeLimit',
     permission: 'control_charge',

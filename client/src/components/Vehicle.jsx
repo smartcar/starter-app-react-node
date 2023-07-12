@@ -31,9 +31,6 @@ const Vehicle = ({
     config.vehicleProperties.some(
       (property) => property.name === 'startStopCharge'
     );
-  const showLockUnlock = config.vehicleProperties.some(
-    (property) => property.name === 'lockUnlock'
-  );
   // If enabled, stores inputs to update respective properties e.g. setAmperage
   const [newVehicleProperty, setNewVehicleProperty] = useState({
     chargeLimit: '',
@@ -95,6 +92,18 @@ const Vehicle = ({
           />
         )
       );
+    } else if (property.componentType === 'LockUnlock') {
+      return <LockUnlock updateProperty={updateProperty} />;
+    } else if (
+      property.componentType === 'StartStopCharge' &&
+      showChargeToggle
+    ) {
+      return (
+        <StartStopCharge
+          updateProperty={updateProperty}
+          chargeState={chargeState}
+        />
+      );
     } else {
       return null;
     }
@@ -122,13 +131,6 @@ const Vehicle = ({
         <Loading showText={false} />
       ) : (
         <>
-          {showLockUnlock && <LockUnlock updateProperty={updateProperty} />}
-          {showChargeToggle && (
-            <StartStopCharge
-              updateProperty={updateProperty}
-              chargeState={chargeState}
-            />
-          )}
           <div className="container stats">{properties}</div>
           <div>
             <button

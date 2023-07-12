@@ -2,6 +2,7 @@ import React from 'react';
 import { formatName, timeDiff } from '../utils';
 
 const staticText = {
+  vin: (status) => status,
   isPluggedIn: (status) => (status ? 'Yes' : 'No'),
   chargeState: (status) => formatName(status),
   chargeCompletion: (status) => timeDiff(status),
@@ -114,7 +115,7 @@ export const SetVehicleProperty = ({
  */
 export const LockUnlock = ({ updateProperty }) => {
   return (
-    <div>
+    <div className="temporary-property">
       <button
         className="property-action"
         name="security"
@@ -138,7 +139,7 @@ export const LockUnlock = ({ updateProperty }) => {
  */
 export const StartStopCharge = ({ updateProperty, chargeState }) => {
   return (
-    <div>
+    <div className="temporary-property">
       <button
         className="property-action"
         name="chargeState"

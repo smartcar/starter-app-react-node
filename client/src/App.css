@@ -56,6 +56,10 @@ body {
   grid-column: 1 / span 2;
 }
 
+.temporary-property {
+  grid-column: 1 / span 2;
+}
+
 .loading {
   display: flex;
   flex-direction: column;

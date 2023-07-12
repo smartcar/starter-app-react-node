@@ -35,12 +35,13 @@ const client = new smartcar.AuthClient({
   mode: 'live', // one of ['live', 'test', 'simulated']
 });
 
+// Exchanges code for access object, attaches access object to session cookie as a JWT
 app.get('/exchange', async function(req, res) {
   try {
     const code = req.query.code;
     const access = await client.exchangeCode(code)
-    // we'll store the access object as a jwt in a session cookie
-    // in a production app you'll want to store it in some kind of persistent storage 
+    // For now, we'll store the access object as a jwt in a session cookie
+    // In a production app, you'll want to store it in some kind of persistent storage 
     // and handle refreshing the token, which expires after 2 hrs https://smartcar.com/docs/api/#refresh-token-exchange
     const accessToken = jwt.sign(
       access,
@@ -61,6 +62,7 @@ app.get('/exchange', async function(req, res) {
   }
 });
 
+// Gets a list of authorized vehicles and info for the first vehicle in that list
 app.get('/vehicles', authenticate, async function(req, res) {
   try {
     let vehicles = [];
@@ -71,7 +73,6 @@ app.get('/vehicles', authenticate, async function(req, res) {
     const error = req.query.error === 'disconnection-failure' ? 'Some vehicles failed to disconnect' : undefined;
 
     const { accessToken } = req.tokens;
-    // get list of vehicle ids
     const { vehicles: vehicleIds } = await smartcar.getVehicles(accessToken);
     // we'll also get all the info for the first vehicle in the list
     // TODO: use Promise.all for these two async calls
@@ -90,6 +91,7 @@ app.get('/vehicles', authenticate, async function(req, res) {
   }
 })
 
+// Gets info for a single vehicle
 app.get('/vehicle', authenticate, async function(req, res) {
   try {
     const vehicleProperties = req.query.vehicleProperties?.split('.');
@@ -105,6 +107,7 @@ app.get('/vehicle', authenticate, async function(req, res) {
   }
 });
 
+// Stop or start charge for a vehicle
 app.post('/vehicle/charge', authenticate, async function(req, res) {
   // TODO: Decide how we want to update the client's chargeState, either passing it in the payload, or wait for event-based webhook
   try {
@@ -131,6 +134,7 @@ app.post('/vehicle/charge', authenticate, async function(req, res) {
   }
 })
 
+// Set charge limit for vehicle
 app.post('/vehicle/charge-limit', authenticate, async function(req, res) {
   try {
     let { limit } = req.body;
@@ -153,6 +157,7 @@ app.post('/vehicle/charge-limit', authenticate, async function(req, res) {
   }
 })
 
+// Set amperage for vehicle
 app.post('/vehicle/amperage', authenticate, async function(req, res) {
   try {
     let { amperage } = req.body;
@@ -175,6 +180,7 @@ app.post('/vehicle/amperage', authenticate, async function(req, res) {
   }
 })
 
+// Lock or unlock a vehicle
 app.post('/vehicle/security', authenticate, async function(req, res) {
   try {
     const { action } = req.body;
@@ -199,6 +205,7 @@ app.post('/vehicle/security', authenticate, async function(req, res) {
   }
 })
 
+// disconnect a vehicle
 app.delete('/vehicle', authenticate, async function(req, res) {
   try {
     const { accessToken } = req.tokens;
@@ -212,6 +219,7 @@ app.delete('/vehicle', authenticate, async function(req, res) {
   }
 })
 
+// disconnect all vehicles
 app.delete('/vehicles', authenticate, async function(req, res) {
   try {
     const { accessToken } = req.tokens;
@@ -234,7 +242,10 @@ app.delete('/vehicles', authenticate, async function(req, res) {
   }
 });
 
-// To use this route, please first read the Webhooks section of the readme
+/**
+ * SMARTCAR WEBHOOKS
+ * Before using this route, please read the Webhooks section of the readme.
+ */
 app.post('/smartcar-webhook', async function(req, res) {
   const { eventName } = req.body;
   const mat = process.env.SMARTCAR_MAT;

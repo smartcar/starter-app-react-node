@@ -19,6 +19,12 @@ const createSmartcarVehicle = (
   return new smartcar.Vehicle(vehicleId, accessToken, { unitSystem });
 };
 
+/**
+ * Helper function that extracts the access object from the session cookie.
+ *
+ * @param {object} req
+ * @returns {object} access object with the accessToken field
+ */
 const getAccess = (req) => {
   const accessCookie = req.cookies?.['my-starter-app'];
   if (!accessCookie) {
@@ -32,6 +38,13 @@ const getAccess = (req) => {
   return access;
 };
 
+/**
+ * Function to get vehicle attributes: id, make, model, year.
+ *
+ * @param {Array} vehicleIds list of vehicle ids
+ * @param {string} accessToken 
+ * @returns {object} vehicle attributes: id, make, model, year
+ */
 const getVehiclesWithAttributes = async (vehicleIds, accessToken) => {
   const vehiclePromises = vehicleIds.map((vehicleId) => {
     const vehicle = createSmartcarVehicle(vehicleId, accessToken);
@@ -72,6 +85,13 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
   return value;
 }
 
+/**
+ * Helper function to generate api requests to Smartcar as promises
+ *
+ * @param {object} vehicle Smartcar vehicle instance
+ * @param {string} requestName the name of the request corresponding to the desired vehicle property
+ * @returns {Promise}
+ */
 const promiseGenerator = (vehicle, requestName) => {
   const requestMap = {
     amperage: vehicle.request('GET', 'tesla/charge/ammeter'),
@@ -93,8 +113,8 @@ const promiseGenerator = (vehicle, requestName) => {
 }
 
 const vehicleProperties = {
-  // this map gives us information about which smartcar api request to make
-  // and how to handle the settled promise
+  // requestName helps identify the corresponding request to Smartcar api  
+  // settle handles the promise settlement 
   amperage: {
     requestName: 'amperage',
     settle: (settlement) => handleSettlement(settlement, 'body.amperage'),
@@ -172,6 +192,20 @@ const vehicleProperties = {
 // You'll want to reserve this method for fetching vehicle info for the first time (onboarding)
 // You may want to store this information in a database to avoid excessive api calls to Smartcar and to the vehicle
 // To update data that may have gone stale, you can poll data or use our webhooks
+
+
+/**
+ * Helper function to process settled promise
+ *
+ * @param {string} vehicleId 
+ * @param {string} accessToken
+ * @param {Array} requestedProperties list of desired vehicle properties
+ * @returns {object} vehicle properties matching requestedProperties
+ * 
+ * You'll want to reserve this method for fetching vehicle info for the first time (onboarding)
+ * And store this information in a database to avoid excessive api calls to Smartcar and to the vehicle
+ * To update data that may have gone stale, you can poll data or use our webhooks
+ */
 const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = []) => {
   const vehicle = createSmartcarVehicle(vehicleId, accessToken);
   const requests = requestedProperties.map(vehicleProperty => vehicleProperties[vehicleProperty].requestName);

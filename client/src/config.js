@@ -154,13 +154,12 @@ const energyUtilitiesConfig = {
   staticText: {
     appName: 'ChargeUp',
   },
-  mode: 'test', // one of ['live', 'test', 'simulated']
+  mode: 'test',
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
   singleSelect: false,
   singleSelectVin: '',
   vehicleProperties: [
-    // the order will dictate the order of the UI components
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,
@@ -181,13 +180,12 @@ const autoInsuranceConfig = {
   staticText: {
     appName: 'Sky Insurance',
   },
-  mode: 'test', // one of ['live', 'test', 'simulated']
+  mode: 'test',
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
-    // the order will dictate the order of the UI components
     properties.vin,
     properties.odometer,
     properties.location,
@@ -196,16 +194,56 @@ const autoInsuranceConfig = {
   ],
 };
 
+const carSharingConfig = {
+  staticText: {
+    appName: 'CarShare',
+  },
+  mode: 'test',
+  unitSystem: 'imperial',
+  brandSelect: '',
+  singleSelect: true,
+  singleSelectVin: '',
+  vehicleProperties: [
+    properties.vin,
+    properties.lockUnlock,
+    properties.location,
+    properties.fuel,
+    properties.batteryLevel,
+    properties.iceRange,
+    properties.evRange,
+    properties.odometer,
+  ],
+};
+
+const roadsideAssistanceConfig = {
+  staticText: {
+    appName: 'RoadsideAssist',
+  },
+  mode: 'test',
+  unitSystem: 'imperial',
+  brandSelect: '',
+  singleSelect: true,
+  singleSelectVin: '',
+  vehicleProperties: [
+    properties.vin,
+    properties.location,
+    properties.odometer,
+    properties.tirePressure,
+    properties.engineOil,
+  ],
+};
+
 const buildYourOwnConfig = {
   /**
-   * Section1: App personalization
+   * Section 1: Personalize your app!
    */
   staticText: {
     appName: 'Your App name',
   },
 
   /**
-   * Section 2: Smartcar instantiation: you can also do this directly where smartcar gets instantiated in App.jsx  
+   * Section 2: Configure the Smartcar instance and Connect flow
+   * You can also do this directly where smartcar gets instantiated in App.jsx  
    */ 
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
@@ -214,7 +252,7 @@ const buildYourOwnConfig = {
   singleSelectVin: '',
 
   /**
-   * Section 3: Most important. Add the desired properties from the properties object. This will decide the following:
+   * Section 3: Build the app! Add the desired properties from the properties object. This will decide the following:
    *  1. The permissions requested from the user in the Connect flow
    *  2. The UI elements: displayed vehicle stats, vehicle action buttons
    *  3. The order of the UI layout, which matches the order in this array.

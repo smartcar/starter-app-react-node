@@ -197,18 +197,32 @@ const autoInsuranceConfig = {
 };
 
 const buildYourOwnConfig = {
+  /**
+   * Section1: App personalization
+   */
   staticText: {
     appName: 'Your App name',
   },
+
+  /**
+   * Section 2: Smartcar instantiation: you can also do this directly where smartcar gets instantiated in App.jsx  
+   */ 
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: false,
   singleSelectVin: '',
-  // required endpoints attributes, we already included this for you, no action needed from you
+
+  /**
+   * Section 3: Most important. Add the desired properties from the properties object. This will decide the following:
+   *  1. The permissions requested from the user in the Connect flow
+   *  2. The UI elements: displayed vehicle stats, vehicle action buttons
+   *  3. The order of the UI layout, which matches the order in this array.
+   *  4. The api methods. What car info to retrieve. What vehicle actions (ex: lock/unlock) can be made
+   */
   vehicleProperties: [
-    //need to match the keys in the root config, the order will dictate the order of the UI components
-    // does it look better with the full list of possible vehicle properties and have the developer comment out / delete or start with an empty array and have they build their own
+    properties.vin,
+    // properties.someVehicleProperty,
   ],
 };
 

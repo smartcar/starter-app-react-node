@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
 import Loading from './Loading';
+import { config } from '../config';
 import {
   LockUnlock,
   SetVehicleProperty,
@@ -8,7 +9,6 @@ import {
   VehicleProperty,
   VehiclePropertyList,
 } from './Properties';
-import { config } from '../config';
 
 const text = {
   disconnect: 'Disconnect',
@@ -87,16 +87,18 @@ const Vehicle = ({
     } else if (property.componentType === 'SetVehicleProperty') {
       const { targetProperty } = property;
       return (
-        <SetVehicleProperty
-          property={property}
-          key={property.name}
-          targetProperty={targetProperty}
-          currentValue={info[targetProperty]}
-          newVehicleProperty={newVehicleProperty}
-          setNewVehicleProperty={setNewVehicleProperty}
-          text={property.text}
-          updateProperty={updateProperty}
-        />
+        info[targetProperty] && (
+          <SetVehicleProperty
+            property={property}
+            key={property.name}
+            targetProperty={targetProperty}
+            currentValue={info[targetProperty]}
+            newVehicleProperty={newVehicleProperty}
+            setNewVehicleProperty={setNewVehicleProperty}
+            text={property.text}
+            updateProperty={updateProperty}
+          />
+        )
       );
     } else {
       return null;
@@ -105,6 +107,7 @@ const Vehicle = ({
 
   return (
     <div className="container vehicle">
+      {/* Renders a select dropdown if multiple vehicles are connected */}
       {vehicles.length === 1 ? (
         <h2>
           {year} {make} {model}

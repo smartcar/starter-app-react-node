@@ -2,13 +2,14 @@ import React from 'react';
 import { formatName, timeDiff } from '../utils';
 import { config } from '../config';
 
+const isMetric = config.unitSystem === 'metric';
 const staticText = {
   vin: (status) => status,
   isPluggedIn: (status) => (status ? 'Yes' : 'No'),
   chargeState: (status) => formatName(status),
   chargeCompletion: (status) => timeDiff(status),
   batteryLevel: (status) => `${status * 100}%`,
-  evRange: (status) => `${status} miles`,
+  evRange: (status) => `${status} ${isMetric ? 'kilometers' : 'miles'}`,
   chargeLimit: (status) => `${status * 100}%`,
   batteryCapacity: (status) => `${status} kilowatt-hours`,
   voltage: (status) => `${status} volts`,
@@ -19,15 +20,20 @@ const staticText = {
       style: 'decimal',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    })} miles`,
-  fuel: (status) => `${status.amountRemaining} gallons`,
+    })} ${isMetric ? 'kilometers' : 'miles'}`,
+  fuel: (status) =>
+    `${status.amountRemaining} ${isMetric ? 'liters' : 'gallons'}`,
   latitude: (latitude) => `Lat: ${latitude.toFixed(4)}...`,
   longitude: (longitude) => `Long: ${longitude.toFixed(4)}...`,
   engineOil: (engineOil) => `${(engineOil * 100).toFixed()}% remaining`,
-  frontLeft: (frontLeft) => `Front left: ${frontLeft.toFixed(1)} psi`,
-  frontRight: (frontRight) => `Front right: ${frontRight.toFixed(1)} psi`,
-  backLeft: (backLeft) => `Back left: ${backLeft.toFixed(1)} psi`,
-  backRight: (backRight) => `Back right: ${backRight.toFixed(1)} psi`,
+  frontLeft: (frontLeft) =>
+    `Front left: ${frontLeft.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+  frontRight: (frontRight) =>
+    `Front right: ${frontRight.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+  backLeft: (backLeft) =>
+    `Back left: ${backLeft.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+  backRight: (backRight) =>
+    `Back right: ${backRight.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
   lock: 'Lock',
   unlock: 'Unlock',
   startCharge: 'Start charge',

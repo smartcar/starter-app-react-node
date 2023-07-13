@@ -167,6 +167,7 @@ const properties = {
 const energyUtilitiesConfig = {
   staticText: {
     appName: 'ChargeUp',
+    loadingMessage: 'Charging up the information superhighway...buckle up!',
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -195,6 +196,7 @@ const energyUtilitiesConfig = {
 const autoInsuranceConfig = {
   staticText: {
     appName: 'Sky Insurance',
+    loadingMessage: 'Rest insured...your vehicle info is on the way!',
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -213,6 +215,7 @@ const autoInsuranceConfig = {
 const carSharingConfig = {
   staticText: {
     appName: 'CarShare',
+    loadingMessage: 'Roaming the streets for your perfect ride...',
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -234,6 +237,7 @@ const carSharingConfig = {
 const roadsideAssistanceConfig = {
   staticText: {
     appName: 'RoadsideAssist',
+    loadingMessage: 'Roadside assistance on standby...your vehicle details coming up!'
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -255,6 +259,7 @@ const buildYourOwnConfig = {
    */
   staticText: {
     appName: 'Your App name',
+    loadingMessage: 'Loading...'
   },
 
   /**
@@ -280,4 +285,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = energyUtilitiesConfig;
+export const config = roadsideAssistanceConfig;

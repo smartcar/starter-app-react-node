@@ -172,6 +172,7 @@ const properties = {
 const energyUtilitiesConfig = {
   staticText: {
     appName: 'ChargeUp',
+    loadingMessage: 'Charging up the information superhighway...buckle up!',
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -180,7 +181,7 @@ const energyUtilitiesConfig = {
   singleSelectVin: '',
   vehicleProperties: [
     // the order will dictate the order of the UI components
-    properties.attributes,
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,
@@ -200,13 +201,15 @@ const energyUtilitiesConfig = {
 const autoInsuranceConfig = {
   staticText: {
     appName: 'Sky Insurance',
+    loadingMessage: 'Rest insured...your vehicle info is on the way!',
   },
   mode: 'test',
-  unitSystem: 'imperial',
+  unitSystem: 'metric',
   brandSelect: '',
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.odometer,
     properties.location,
@@ -218,6 +221,7 @@ const autoInsuranceConfig = {
 const carSharingConfig = {
   staticText: {
     appName: 'CarShare',
+    loadingMessage: 'Roaming the streets for your perfect ride...',
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -225,6 +229,7 @@ const carSharingConfig = {
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.lockUnlock,
     properties.location,
@@ -239,6 +244,7 @@ const carSharingConfig = {
 const roadsideAssistanceConfig = {
   staticText: {
     appName: 'RoadsideAssist',
+    loadingMessage: 'Roadside assistance on standby...your vehicle details coming up!'
   },
   mode: 'test',
   unitSystem: 'imperial',
@@ -246,6 +252,7 @@ const roadsideAssistanceConfig = {
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.location,
     properties.odometer,
@@ -260,6 +267,7 @@ const buildYourOwnConfig = {
    */
   staticText: {
     appName: 'Your App name',
+    loadingMessage: 'Loading...'
   },
 
   /**
@@ -280,9 +288,10 @@ const buildYourOwnConfig = {
    *  4. The api methods. What car info to retrieve. What vehicle actions (ex: lock/unlock) can be made
    */
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     // properties.someVehicleProperty,
   ],
 };
 
-export const config = energyUtilitiesConfig;
+export const config = roadsideAssistanceConfig;

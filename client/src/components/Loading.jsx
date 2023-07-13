@@ -1,12 +1,12 @@
 import React from 'react';
-const staticText = {
-  loading: 'Charging up the information superhighway...buckle up!',
-};
+import { config } from '../config';
+
+const { staticText } = config;
 
 const Loading = ({ showText = true }) => (
   <div className="loading">
     <div className="loading-spinner"></div>
-    {showText && <div>{staticText.loading}</div>}
+    {showText && <div>{staticText.loadingMessage}</div>}
   </div>
 );
 

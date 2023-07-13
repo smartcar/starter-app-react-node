@@ -170,7 +170,7 @@ const vehicleProperties = {
     process: (batchResponse) => {
       try {
         const tirePressure = batchResponse.tirePressure();
-        const { meta, ...remainingValues } = location;
+        const { meta, ...remainingValues } = tirePressure;
         return remainingValues;
       } catch (err) {
         return handleError(err);

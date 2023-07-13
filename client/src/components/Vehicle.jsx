@@ -45,7 +45,9 @@ const Vehicle = ({
   const handleVehicleChange = async (e) => {
     setIsLoading(true);
     // Obtains the selected vehicle id
-    const data = await api.getVehicle(e.target.value);
+    const vehicleId = e.target.value;
+    const make = vehicles.find(vehicle => vehicle.id === vehicleId).make;
+    const data = await api.getVehicle(vehicleId, make);
     setSelectedVehicle(data);
   };
 

@@ -22,19 +22,10 @@ const Vehicle = ({
 
   // Resets state when vehicle is switched or if the current vehicle's status has changed
   useEffect(() => {
-    if (typeof chargeLimit === 'number') {
-      setNewVehicleProperty({
-        ...newVehicleProperty,
-        chargeLimit: chargeLimit * 100,
-      });
-    }
-
-    if (typeof amperage === 'number') {
-      setNewVehicleProperty({
-        ...newVehicleProperty,
-        amperage: amperage,
-      });
-    }
+    setNewVehicleProperty({
+      chargeLimit: typeof chargeLimit === 'number' ? chargeLimit * 100 : '',
+      amperage: typeof amperage === 'number' ? amperage : '',
+    });
   }, [chargeLimit, amperage]);
 
   // Removes the loading screen if the vehicle has been retrieved
@@ -46,7 +37,7 @@ const Vehicle = ({
     setIsLoading(true);
     // Obtains the selected vehicle id
     const vehicleId = e.target.value;
-    const make = vehicles.find(vehicle => vehicle.id === vehicleId).make;
+    const make = vehicles.find((vehicle) => vehicle.id === vehicleId).make;
     const data = await api.getVehicle(vehicleId, make);
     setSelectedVehicle(data);
   };

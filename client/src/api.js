@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getReadProperties } from './utils';
+import { config } from './config';
 
 let api = {};
 
@@ -19,7 +20,10 @@ api.exchangeCode = async (code) => {
 api.getVehicles = async () => {
   const vehicleProperties = getReadProperties().join('.');
   const { data } = await instance.get(`/vehicles`, {
-    params: { vehicleProperties },
+    params: {
+      vehicleProperties,
+      unitSystem: config.unitSystem,
+    },
   });
   return data;
 };
@@ -30,6 +34,7 @@ api.getVehicle = async (vehicleId) => {
     params: {
       vehicleId,
       vehicleProperties,
+      unitSystem: config.unitSystem,
     },
   });
   return data;

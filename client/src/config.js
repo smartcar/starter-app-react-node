@@ -175,7 +175,7 @@ const energyUtilitiesConfig = {
   singleSelectVin: '',
   vehicleProperties: [
     // the order will dictate the order of the UI components
-    properties.attributes,
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,
@@ -197,11 +197,12 @@ const autoInsuranceConfig = {
     appName: 'Sky Insurance',
   },
   mode: 'test',
-  unitSystem: 'imperial',
+  unitSystem: 'metric',
   brandSelect: '',
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.odometer,
     properties.location,
@@ -220,6 +221,7 @@ const carSharingConfig = {
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.lockUnlock,
     properties.location,
@@ -241,6 +243,7 @@ const roadsideAssistanceConfig = {
   singleSelect: true,
   singleSelectVin: '',
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.location,
     properties.odometer,
@@ -275,6 +278,7 @@ const buildYourOwnConfig = {
    *  4. The api methods. What car info to retrieve. What vehicle actions (ex: lock/unlock) can be made
    */
   vehicleProperties: [
+    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     // properties.someVehicleProperty,
   ],

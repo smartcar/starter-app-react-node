@@ -97,6 +97,7 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
  * @param {string} vehicleId 
  * @param {string} accessToken
  * @param {Array} requestedProperties list of desired vehicle properties
+ * @param {string} unitSystem imperial or metric
  * @param {string} [make] required only for brand-specific endpoints 
  * @returns {object} vehicle properties matching requestedProperties
  * 
@@ -104,10 +105,9 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
  * And store this information in a database to avoid excessive api calls to Smartcar and to the vehicle
  * To update data that may have gone stale, you can poll data or use our webhooks
  */
-const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = [], make) => {
-  make = 'CHEVROLET';
+const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = [], unitSystem, make) => {
   const vehicleInfo = { id: vehicleId};
-  const vehicle = createSmartcarVehicle(vehicleId, accessToken);
+  const vehicle = createSmartcarVehicle(vehicleId, accessToken, unitSystem);
   
   // Generate list of vehicle endpoints
   const endpoints = [];

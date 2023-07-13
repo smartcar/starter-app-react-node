@@ -27,13 +27,13 @@ const staticText = {
   longitude: (longitude) => `Long: ${longitude.toFixed(4)}...`,
   engineOil: (engineOil) => `${(engineOil * 100).toFixed()}% remaining`,
   frontLeft: (frontLeft) =>
-    `Front left: ${frontLeft.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+    `Front left: ${frontLeft.toFixed(1)} ${isMetric ? 'Kilopascal' : 'psi'}`,
   frontRight: (frontRight) =>
-    `Front right: ${frontRight.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+    `Front right: ${frontRight.toFixed(1)} ${isMetric ? 'Kilopascal' : 'psi'}`,
   backLeft: (backLeft) =>
-    `Back left: ${backLeft.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+    `Back left: ${backLeft.toFixed(1)} ${isMetric ? 'Kilopascal' : 'psi'}`,
   backRight: (backRight) =>
-    `Back right: ${backRight.toFixed(1)} ${isMetric ? 'Pascal' : 'psi'}`,
+    `Back right: ${backRight.toFixed(1)} ${isMetric ? 'Kilopascal' : 'psi'}`,
   lock: 'Lock',
   unlock: 'Unlock',
   startCharge: 'Start charge',

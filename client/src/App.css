@@ -47,17 +47,18 @@ body {
   padding: 2rem 0;
   border-top: 1px solid var(--lightGrey);
   border-bottom: 1px solid var(--lightGrey);
-  grid-template-columns: auto auto;
-  row-gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.property {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .editable-property {
   margin-top: -1rem;
-  grid-column: 1 / span 2;
-}
-
-.temporary-property {
-  grid-column: 1 / span 2;
 }
 
 .loading {
@@ -183,7 +184,7 @@ button.disconnect:hover {
 button.property-action {
   background-color: var(--white);
   color: var(--black);
-  font-size: 1rem;
+  font-weight: 600;
   min-width: 122px;
   min-height: 37px;
   margin-right: 24px;

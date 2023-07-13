@@ -123,10 +123,10 @@ export const Properties = ({
  */
 const VehicleProperty = ({ property, text }) => {
   return (
-    <>
+    <div id={property.name} className="property">
       <h3>{text}</h3>
       <p>{staticText[property.name](property.status)}</p>
-    </>
+    </div>
   );
 };
 
@@ -136,14 +136,14 @@ const VehicleProperty = ({ property, text }) => {
 const VehiclePropertyList = ({ property, text }) => {
   const statuses = Object.entries(property.status);
   return (
-    <>
+    <div id={property.name} className="property">
       <h3>{text}</h3>
       <ul>
         {statuses.map((status) => (
           <li key={status[0]}>{staticText[status[0]](status[1])}</li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
@@ -173,7 +173,7 @@ const SetVehicleProperty = ({
   };
 
   return (
-    <div className="editable-property">
+    <div id={property.name} className="editable-property">
       <input
         className="property-update"
         name={property.name}
@@ -200,7 +200,7 @@ const SetVehicleProperty = ({
  */
 const LockUnlock = ({ updateProperty }) => {
   return (
-    <div className="temporary-property">
+    <div id="lockUnlock">
       <button
         className="property-action"
         name="security"
@@ -224,7 +224,7 @@ const LockUnlock = ({ updateProperty }) => {
  */
 const StartStopCharge = ({ updateProperty, chargeState }) => {
   return (
-    <div className="temporary-property">
+    <div id="startStopCharge">
       <button
         className="property-action"
         name="chargeState"
@@ -248,7 +248,7 @@ const StartStopCharge = ({ updateProperty, chargeState }) => {
  */
 const Disconnect = ({ vehicles, disconnect }) => {
   return (
-    <div>
+    <div id="disconnect">
       <button className="disconnect" name="disconnect" onClick={disconnect}>
         {staticText.disconnect}
       </button>

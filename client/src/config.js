@@ -1,4 +1,10 @@
+/**
+ * These vehicle properties are derived from our Smartcar endpoints.
+ * For the complete list of available endpoints, please visit our documentation page:
+ * https://smartcar.com/docs/api/#get-all-vehicles
+ */
 const properties = {
+  // Identifying information: id, make, model, year
   attributes: {
     name: 'attributes',
     permission: 'read_vehicle_info',
@@ -35,6 +41,7 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Capacity',
   },
+  // date and time the vehicle expects to "complete" this charging session, which we'll use to compute hours and minutes
   chargeCompletion: {
     name: 'chargeCompletion',
     permission: 'read_charge',
@@ -49,13 +56,6 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Charge limit',
   },
-  disconnect: {
-    name: 'disconnect',
-    permission: '',
-    requestType: 'DELETE',
-    componentType: 'Disconnect',
-    text: '',
-  },
   setChargeLimit: {
     name: 'setChargeLimit',
     permission: 'control_charge',
@@ -65,11 +65,19 @@ const properties = {
     text: 'Set new limit',
   },
   chargeState: {
+    // returns CHARGING FULLY_CHARGED NOT_CHARGING
     name: 'chargeState',
     permission: 'read_charge',
     requestType: 'GET',
     componentType: 'VehicleProperty',
     text: 'Current state',
+  },
+  disconnect: {
+    name: 'disconnect',
+    permission: '',
+    requestType: 'DELETE',
+    componentType: 'Disconnect',
+    text: '',
   },
   engineOil: {
     name: 'engineOil',
@@ -78,6 +86,7 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Engine oil life',
   },
+  // remaining range of an electric vehicle's battery
   evRange: {
     name: 'evRange',
     permission: 'read_battery',
@@ -85,6 +94,7 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Range',
   },
+  // Note: The fuel tank API is only available for vehicles sold in the United States.
   fuel: {
     name: 'fuel',
     permission: 'read_fuel',
@@ -92,6 +102,8 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Fuel',
   },
+  // estimated remaining distance the car can travel based on the vehicle’s gas tank
+  // Note: The fuel tank API is only available for vehicles sold in the United States.
   iceRange: {
     name: 'iceRange',
     permission: 'read_fuel',

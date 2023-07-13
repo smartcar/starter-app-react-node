@@ -109,7 +109,6 @@ app.get('/vehicle', authenticate, async function(req, res) {
 
 // Stop or start charge for a vehicle
 app.post('/vehicle/charge', authenticate, async function(req, res) {
-  // TODO: Decide how we want to update the client's chargeState, either passing it in the payload, or wait for event-based webhook
   try {
     const { action } = req.body;
     const { accessToken } = req.tokens;
@@ -168,6 +167,7 @@ app.post('/vehicle/amperage', authenticate, async function(req, res) {
     const { accessToken } = req.tokens;
     const vehicleId = req.query.vehicleId;
     const vehicle = createSmartcarVehicle(vehicleId, accessToken);
+    // TODO: handle BSE
     const result = await vehicle.request("POST", "tesla/charge/ammeter", {"amperage": amperage});
     res.status(200).json({
       amperage,

@@ -32,7 +32,9 @@ export const timeDiff = (date) => {
  * Returns array of permissions from selected properties (in config)
  */
 export const getPermissions = () => {
-  const requests = config.vehicleProperties.map(property => property.permission);
+  const requests = config.vehicleProperties.map(
+    (property) => property.permission
+  );
   const permissions = [...new Set(requests)];
 
   return permissions;
@@ -42,7 +44,11 @@ export const getPermissions = () => {
  * Returns an array of vehicle properties with a GET requestType
  */
 export const getReadProperties = () => {
+  // The attributes endpoint is handled in a separate request
   return config.vehicleProperties
-    .filter(property => property.requestType === 'GET')
-    .map(property => property.name);
-}
+    .filter(
+      (property) =>
+        property.requestType === 'GET' && property.name !== 'attributes'
+    )
+    .map((property) => property.name);
+};

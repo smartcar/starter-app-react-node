@@ -1,4 +1,11 @@
 const properties = {
+  attributes: {
+    name: 'attributes',
+    permission: 'read_vehicle_info',
+    requestType: 'GET',
+    componentType: 'Attributes',
+    text: '',
+  },
   amperage: {
     name: 'amperage',
     permission: 'read_charge',
@@ -168,6 +175,7 @@ const energyUtilitiesConfig = {
   singleSelectVin: '',
   vehicleProperties: [
     // the order will dictate the order of the UI components
+    properties.attributes,
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,

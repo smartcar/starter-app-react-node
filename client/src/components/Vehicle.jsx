@@ -22,10 +22,19 @@ const Vehicle = ({
 
   // Resets state when vehicle is switched or if the current vehicle's status has changed
   useEffect(() => {
-    setNewVehicleProperty({
-      chargeLimit: chargeLimit * 100,
-      amperage: amperage,
-    });
+    if (typeof chargeLimit === 'number') {
+      setNewVehicleProperty({
+        ...newVehicleProperty,
+        chargeLimit: chargeLimit * 100,
+      });
+    }
+
+    if (typeof amperage === 'number') {
+      setNewVehicleProperty({
+        ...newVehicleProperty,
+        amperage: amperage,
+      });
+    }
   }, [chargeLimit, amperage]);
 
   // Removes the loading screen if the vehicle has been retrieved

@@ -28,11 +28,12 @@ api.getVehicles = async () => {
   return data;
 };
 
-api.getVehicle = async (vehicleId) => {
+api.getVehicle = async (vehicleId, make) => {
   const vehicleProperties = getReadProperties().join('.');
   const { data } = await instance.get(`/vehicle`, {
     params: {
       vehicleId,
+      make,
       vehicleProperties,
       unitSystem: config.unitSystem,
     },
@@ -60,12 +61,12 @@ api.setChargeLimit = async (vehicleId, limit) => {
   );
 };
 
-api.setAmperage = async (vehicleId, amperage) => {
+api.setAmperage = async (vehicleId, amperage, make) => {
   return await instance.post(
     '/vehicle/amperage',
     { amperage },
     {
-      params: { vehicleId },
+      params: { vehicleId, make },
     }
   );
 };

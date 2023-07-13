@@ -106,7 +106,10 @@ const handleSettlement = (settlement, path, errorMessage = 'Information unavaila
  * To update data that may have gone stale, you can poll data or use our webhooks
  */
 const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = [], unitSystem, make) => {
-  const vehicleInfo = { id: vehicleId};
+  const vehicleInfo = {
+    id: vehicleId,
+    make,
+  };
   const vehicle = createSmartcarVehicle(vehicleId, accessToken, unitSystem);
   
   // Generate list of vehicle endpoints
@@ -128,7 +131,7 @@ const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = [], 
   // process batchResponse, populate response body
   requestedProperties.forEach(requestedProperty => {
     const { process } = vehicleProperties[requestedProperty];
-    vehicleInfo[requestedProperty] = process(batchResponse);
+    vehicleInfo[requestedProperty] = process(batchResponse, make);
   })
   return vehicleInfo;
 }

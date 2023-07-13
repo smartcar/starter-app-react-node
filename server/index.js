@@ -79,7 +79,13 @@ app.get('/vehicles', authenticate, async function(req, res) {
     // TODO: use Promise.all for these two async calls
     if (vehicleIds.length > 0) {
       vehicles = await getVehiclesWithAttributes(vehicleIds, accessToken);
-      selectedVehicle = await getVehicleInfo(vehicles[0].id, accessToken, vehicleProperties, unitSystem);
+      selectedVehicle = await getVehicleInfo(
+        vehicles[0].id,
+        accessToken,
+        vehicleProperties,
+        unitSystem,
+        vehicles[0].make
+      );
     }
     res.status(200).json({
       vehicles,
@@ -97,9 +103,9 @@ app.get('/vehicle', authenticate, async function(req, res) {
   try {
     const vehicleProperties = req.query.vehicleProperties?.split('.');
     const { accessToken } = req.tokens;
-    const { vehicleId, unitSystem } = req.query;
+    const { vehicleId, unitSystem, make } = req.query;
 
-    const vehicleData = await getVehicleInfo(vehicleId, accessToken, vehicleProperties, unitSystem);
+    const vehicleData = await getVehicleInfo(vehicleId, accessToken, vehicleProperties, unitSystem, make);
     console.log(vehicleData);
     res.json(vehicleData);
   } catch (err) {
@@ -160,16 +166,17 @@ app.post('/vehicle/charge-limit', authenticate, async function(req, res) {
 // Set amperage for vehicle
 app.post('/vehicle/amperage', authenticate, async function(req, res) {
   try {
+    const { accessToken } = req.tokens;
+    const { vehicleId, make } = req.query;
     let { amperage } = req.body;
     if (isNaN(amperage)) {
       throw new Error('Amperage is not a number');
     }
     amperage = Number(amperage);
-    const { accessToken } = req.tokens;
-    const vehicleId = req.query.vehicleId;
+
     const vehicle = createSmartcarVehicle(vehicleId, accessToken);
     // TODO: handle BSE
-    const result = await vehicle.request("POST", "tesla/charge/ammeter", {"amperage": amperage});
+    const result = await vehicle.request("POST", `${make.toLowerCase()}/charge/ammeter`, {"amperage": amperage});
     res.status(200).json({
       amperage,
       message: result.message || 'Successfully sent request to vehicle',

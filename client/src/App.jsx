@@ -39,7 +39,7 @@ const App = () => {
     clientId: process.env.REACT_APP_CLIENT_ID,
     redirectUri: process.env.REACT_APP_REDIRECT_URI,
     // set scope of permissions: https://smartcar.com/docs/api/#permissions
-    scope: ['read_vehicle_info', ...getPermissions()],
+    scope: [...getPermissions()],
     mode: config.mode, // one of ['live', 'test', 'simulated']
     onComplete,
   });
@@ -73,44 +73,31 @@ const App = () => {
     }
   };
 
-  const controlCharge = async (action) => {
+  const updateProperty = async (property, action) => {
     try {
       const vehicleId = selectedVehicle.id;
-      const { data } = await api.controlCharge(vehicleId, action);
-      setSelectedVehicle({
-        ...selectedVehicle,
-        chargeState: data.chargeState,
-      });
-      setError(null);
-    } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
-    }
-  };
-
-  const setChargeLimit = async (limit) => {
-    try {
-      const vehicleId = selectedVehicle.id;
-      const { data } = await api.setChargeLimit(vehicleId, limit / 100);
-      setSelectedVehicle({
-        ...selectedVehicle,
-        chargeLimit: data.limit,
-      });
-      setError(null);
-    } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
-    }
-  };
-
-  const setAmperage = async (amperage) => {
-    try {
-      const vehicleId = selectedVehicle.id;
-      const { data } = await api.setAmperage(vehicleId, amperage);
-      setSelectedVehicle({
-        ...selectedVehicle,
-        amperage: data.amperage,
-      });
+      if (property === 'chargeState') {
+        const { data } = await api.controlCharge(vehicleId, action);
+        setSelectedVehicle({
+          ...selectedVehicle,
+          chargeState: data.chargeState,
+        });
+      } else if (property === 'chargeLimit') {
+        const { data } = await api.setChargeLimit(vehicleId, action / 100);
+        setSelectedVehicle({
+          ...selectedVehicle,
+          chargeLimit: data.limit,
+        });
+      } else if (property === 'amperage') {
+        const { data } = await api.setAmperage(vehicleId, action);
+        setSelectedVehicle({
+          ...selectedVehicle,
+          amperage: data.amperage,
+        });
+      } else if (property === 'security') {
+        const { data } = await api.security(vehicleId, action);
+        console.log(data.message);
+      }
       setError(null);
     } catch (error) {
       const errorMessage = error.response.data.error;
@@ -131,9 +118,7 @@ const App = () => {
                 disconnect={disconnect}
                 vehicles={vehicles}
                 setSelectedVehicle={setSelectedVehicle}
-                controlCharge={controlCharge}
-                setChargeLimit={setChargeLimit}
-                setAmperage={setAmperage}
+                updateProperty={updateProperty}
               />
             </>
           ) : (

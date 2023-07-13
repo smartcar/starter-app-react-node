@@ -1,4 +1,11 @@
 const properties = {
+  attributes: {
+    name: 'attributes',
+    permission: 'read_vehicle_info',
+    requestType: 'GET',
+    componentType: 'Attributes',
+    text: '',
+  },
   amperage: {
     name: 'amperage',
     permission: 'read_charge',
@@ -42,6 +49,13 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Charge limit',
   },
+  disconnect: {
+    name: 'disconnect',
+    permission: '',
+    requestType: 'DELETE',
+    componentType: 'Disconnect',
+    text: '',
+  },
   setChargeLimit: {
     name: 'setChargeLimit',
     permission: 'control_charge',
@@ -54,7 +68,7 @@ const properties = {
     name: 'chargeState',
     permission: 'read_charge',
     requestType: 'GET',
-    componentType: 'ChargeState',
+    componentType: 'VehicleProperty',
     text: 'Current state',
   },
   engineOil: {
@@ -96,7 +110,7 @@ const properties = {
     name: 'location',
     permission: 'read_location',
     requestType: 'GET',
-    componentType: 'VehicleProperty',
+    componentType: 'VehiclePropertyList',
     text: 'Location',
   },
   lockUnlock: {
@@ -124,7 +138,7 @@ const properties = {
     name: 'tirePressure',
     permission: 'read_tires',
     requestType: 'GET',
-    componentType: 'VehicleProperty',
+    componentType: 'VehiclePropertyList',
     text: 'Tire Pressure',
   },
   vin: {
@@ -132,7 +146,7 @@ const properties = {
     permission: 'read_vin',
     requestType: 'GET',
     componentType: 'VehicleProperty',
-    text: 'text',
+    text: 'VIN',
   },
   voltage: {
     name: 'voltage',
@@ -160,6 +174,8 @@ const energyUtilitiesConfig = {
   singleSelect: false,
   singleSelectVin: '',
   vehicleProperties: [
+    // the order will dictate the order of the UI components
+    properties.attributes,
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,
@@ -243,8 +259,8 @@ const buildYourOwnConfig = {
 
   /**
    * Section 2: Configure the Smartcar instance and Connect flow
-   * You can also do this directly where smartcar gets instantiated in App.jsx  
-   */ 
+   * You can also do this directly where smartcar gets instantiated in App.jsx
+   */
   mode: 'live', // one of ['live', 'test', 'simulated']
   unitSystem: 'imperial',
   brandSelect: '',

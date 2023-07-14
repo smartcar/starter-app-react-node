@@ -77,7 +77,7 @@ const properties = {
   },
   disconnect: {
     name: 'disconnect',
-    permission: '',
+    permission: null,
     requestType: 'DELETE',
     componentType: 'Disconnect',
     text: '',
@@ -191,9 +191,11 @@ const energyUtilitiesConfig = {
   // brandSelect: 'TESLA',
   singleSelect: false,
   singleSelectVin: '',
+  requiredVehicleProperties: [
+    properties.attributes,
+  ],
   vehicleProperties: [
     // the order will dictate the order of the UI components
-    properties.attributes, // a REQUIRED endpoint for this app
     properties.startStopCharge,
     properties.vin,
     properties.isPluggedIn,
@@ -222,8 +224,10 @@ const autoInsuranceConfig = {
   brandSelect: '',
   singleSelect: true,
   singleSelectVin: '',
+  requiredVehicleProperties: [
+    properties.attributes,
+  ],
   vehicleProperties: [
-    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.odometer,
     properties.location,
@@ -243,8 +247,10 @@ const carSharingConfig = {
   brandSelect: '',
   singleSelect: true,
   singleSelectVin: '',
+  requiredVehicleProperties: [
+    properties.attributes,
+  ],
   vehicleProperties: [
-    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.lockUnlock,
     properties.location,
@@ -267,8 +273,10 @@ const roadsideAssistanceConfig = {
   brandSelect: '',
   singleSelect: true,
   singleSelectVin: '',
+  requiredVehicleProperties: [
+    properties.attributes,
+  ],
   vehicleProperties: [
-    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     properties.location,
     properties.odometer,
@@ -304,8 +312,10 @@ const buildYourOwnConfig = {
    *  3. The order of the UI layout, which matches the order in this array.
    *  4. The api methods. What car info to retrieve. What vehicle actions (ex: lock/unlock) can be made
    */
+  requiredVehicleProperties: [
+    properties.attributes, // do not change, used to render select dropdown
+  ],
   vehicleProperties: [
-    properties.attributes, // a REQUIRED endpoint for this app
     properties.vin,
     // properties.someVehicleProperty,
   ],

@@ -24,10 +24,10 @@ const App = () => {
       setIsLoading(true);
       await api.exchangeCode(code);
       const data = await api.getVehicles();
-      setIsLoading(false);
-      setError(null);
       setVehicles(data.vehicles);
       setSelectedVehicle(data.selectedVehicle);
+      setError(null);
+      setIsLoading(false);
     } catch (error) {
       const errorMessage = error.response.data.error;
       setError(new Error(errorMessage));
@@ -58,18 +58,43 @@ const App = () => {
     });
 
   const disconnect = async (e) => {
-    try {
-      if (e.target.name === 'disconnect') {
+    if (e.target.name === 'disconnect') {
+      try {
         const vehicleId = selectedVehicle.id;
         await api.disconnect(vehicleId);
-      } else {
-        await api.disconnectAll();
+        setIsLoading(true);
+        const data = await api.getVehicles();
+        setVehicles(data.vehicles);
+        setSelectedVehicle(data.selectedVehicle);
+        setError(null);
+        setIsLoading(false);
+      } catch (error) {
+        setError(new Error(error.response.data.error || 'Unknown error'));
+        setIsLoading(false);
       }
-      setError(null);
-      setSelectedVehicle({});
-    } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
+      return;
+    }
+    if (e.target.name === 'disconnectAll') {
+      try {
+        await api.disconnectAll();
+        setSelectedVehicle({});
+        setVehicles([]);
+        return;
+      } catch (error) {
+        setError(new Error(error.response.data.error || 'Unknown error'));
+      }
+      // if disconnect all fails, we'll fetch any remaining vehicles
+      try {
+        setIsLoading(true);
+        const data = await api.getVehicles();
+        setIsLoading(false);
+        setError(null);
+        setVehicles(data.vehicles);
+        setSelectedVehicle(data.selectedVehicle);
+      } catch (error) {
+        setError(new Error(error.response.data.error || 'Unknown error'));
+        setIsLoading(false);
+      }
     }
   };
 
@@ -111,7 +136,7 @@ const App = () => {
         <h1>{config.staticText.appName}</h1>
         {isLoading && <Loading />}
         {!isLoading &&
-          (Object.keys(selectedVehicle).length !== 0 ? (
+          ((vehicles.length > 0 && Object.keys(selectedVehicle).length !== 0) ? (
             <>
               <Vehicle
                 info={selectedVehicle}

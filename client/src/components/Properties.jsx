@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatName, timeDiff } from '../utils';
-import { config, properties as vehicleProperties } from '../config';
+import { config } from '../config';
 
 const isMetric = config.unitSystem === 'metric';
 const staticText = {
@@ -63,8 +63,8 @@ export const Properties = ({
 
   return config.vehicleProperties.map((property) => {
     if (info[property.name]?.error?.type === 'PERMISSION' ||
-      (vehicleProperties[property.name].supportedMakes
-        && !vehicleProperties[property.name].supportedMakes.includes(make))
+      (property.supportedMakes
+        && !property.supportedMakes.includes(make))
     ) {
       return null;
     } else if (property.componentType === 'VehicleProperty') {

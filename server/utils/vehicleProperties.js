@@ -22,6 +22,17 @@ const vehicleProperties = {
       }
     },
   },
+  attributes: {
+    endpoint: '/',
+    process: (batchResponse) => {
+      try {
+        const { meta, ...remainingValues } = batchResponse.attributes();
+        return remainingValues;
+      } catch (err) {
+        return handleError(err);
+      }
+    }
+  },
   batteryCapacity: {
     endpoint: '/battery/capacity',
     process: (batchResponse) => {

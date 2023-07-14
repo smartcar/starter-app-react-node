@@ -4,6 +4,7 @@ import { config } from '../config';
 
 const isMetric = config.unitSystem === 'metric';
 const staticText = {
+  attributes: (status) => `${status.make} ${status.model} ${status.year}`,
   vin: (status) => status,
   isPluggedIn: (status) => (status ? 'Yes' : 'No'),
   chargeState: (status) => formatName(status),

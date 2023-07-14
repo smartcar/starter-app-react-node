@@ -9,8 +9,8 @@ const properties = {
     name: 'attributes',
     permission: 'read_vehicle_info',
     requestType: 'GET',
-    componentType: 'Attributes',
-    text: '',
+    componentType: 'VehicleProperty',
+    text: 'Vehicle',
   },
   amperage: {
     name: 'amperage',

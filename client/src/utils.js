@@ -35,7 +35,7 @@ export const getPermissions = () => {
   const combinedPermissions =
     config.vehicleProperties
     .concat(config.requiredVehicleProperties)
-    .filter(property => property.permission)
+    .filter((property) => property.permission)
     .map((property) => property.permission);
   const permissions = [...new Set(combinedPermissions)];
   return permissions;

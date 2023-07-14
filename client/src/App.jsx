@@ -89,8 +89,8 @@ const App = () => {
         const data = await api.getVehicles();
         setIsLoading(false);
         setError(null);
-        setVehicles(data.vehicles);
         setSelectedVehicle(data.selectedVehicle);
+        setVehicles(data.vehicles);
       } catch (error) {
         setError(new Error(error.response.data.error || 'Unknown error'));
         setIsLoading(false);
@@ -136,7 +136,7 @@ const App = () => {
         <h1>{config.staticText.appName}</h1>
         {isLoading && <Loading />}
         {!isLoading &&
-          ((vehicles.length > 0 && Object.keys(selectedVehicle).length !== 0) ? (
+          ((vehicles.length > 0 && vehicles.some((vehicle) => vehicle.id === selectedVehicle.id)) ? (
             <>
               <Vehicle
                 info={selectedVehicle}

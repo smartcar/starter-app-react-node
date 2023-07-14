@@ -3,7 +3,7 @@
  * For the complete list of available endpoints, please visit our documentation page:
  * https://smartcar.com/docs/api/#get-all-vehicles
  */
-export const properties = {
+const properties = {
   // Identifying information: id, make, model, year
   attributes: {
     name: 'attributes',

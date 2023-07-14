@@ -9,6 +9,7 @@ const staticText = {
   chargeState: (status) => formatName(status),
   chargeCompletion: (status) => timeDiff(status),
   batteryLevel: (status) => `${status * 100}%`,
+  iceRange: (status) => `${status} ${isMetric ? 'kilometers' : 'miles'}`,
   evRange: (status) => `${status} ${isMetric ? 'kilometers' : 'miles'}`,
   chargeLimit: (status) => `${status * 100}%`,
   batteryCapacity: (status) => `${status} kilowatt-hours`,

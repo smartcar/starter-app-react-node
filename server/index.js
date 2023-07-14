@@ -70,9 +70,6 @@ app.get('/vehicles', authenticate, async function(req, res) {
     let vehicles = [];
     let selectedVehicle = {};
 
-    // in the event some vehicles fail to disconnect, we'll return those vehicles along with this error message
-    const error = req.query.error === 'disconnection-failure' ? 'Some vehicles failed to disconnect' : undefined;
-
     const { accessToken } = req.tokens;
     const { vehicles: vehicleIds } = await smartcar.getVehicles(accessToken);
     // we'll also get all the info for the first vehicle in the list
@@ -90,7 +87,6 @@ app.get('/vehicles', authenticate, async function(req, res) {
     res.status(200).json({
       vehicles,
       selectedVehicle,
-      error,
     })
   } catch (err) {
     const message = err.message || 'Failed to fetch vehicles.';
@@ -220,7 +216,9 @@ app.delete('/vehicle', authenticate, async function(req, res) {
     const vehicleId = req.query.vehicleId;
     const vehicle = createSmartcarVehicle(vehicleId, accessToken);
     await vehicle.disconnect();
-    res.redirect(303, '/vehicles');
+    res.status(200).json({
+      message: "Successfully disconnected vehicle",
+    });
   } catch (err) {
     const message = err.message || 'Failed to disconnect vehicle.';
     res.status(500).json({error: message})
@@ -238,14 +236,15 @@ app.delete('/vehicles', authenticate, async function(req, res) {
     })
 
     const settlements = await Promise.allSettled(disconnectPromises);
-    // if some vehicles could not disconnect successfully, we'll send an error message along with the vehicles that are still connected
-    let redirectPath = '/vehicles'; 
     if (settlements.some(settlement => settlement.status === 'rejected')) {
-      redirectPath += '?error=disconnection-failure';
+      res.status(500).json({error: 'Failed to disconnect one or more vehicles'})
+    } else {
+      res.status(200).json({
+        message: "Successfully disconnected all vehicles",
+      });
     }
-    res.redirect(303, redirectPath);
   } catch (err) {
-    const message = err.message || 'Failed to disconnect all vehicles.';
+    const message = err.message || 'Failed to disconnect vehicles.';
     res.status(500).json({error: message})
   }
 });

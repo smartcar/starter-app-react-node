@@ -67,6 +67,7 @@ const Vehicle = ({
           <div className="container stats">
             <Properties
               info={info}
+              make={make}
               newVehicleProperty={newVehicleProperty}
               setNewVehicleProperty={setNewVehicleProperty}
               updateProperty={updateProperty}

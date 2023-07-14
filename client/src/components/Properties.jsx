@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatName, timeDiff } from '../utils';
-import { config } from '../config';
+import { config, properties as vehicleProperties } from '../config';
 
 const isMetric = config.unitSystem === 'metric';
 const staticText = {
@@ -47,6 +47,7 @@ const staticText = {
  */
 export const Properties = ({
   info,
+  make,
   newVehicleProperty,
   setNewVehicleProperty,
   updateProperty,
@@ -56,8 +57,11 @@ export const Properties = ({
   const { chargeState, isPluggedIn } = info;
   const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
 
-  const properties = config.vehicleProperties.map((property) => {
-    if (info[property.name]?.error?.type === 'PERMISSION') {
+  return config.vehicleProperties.map((property) => {
+    if (info[property.name]?.error?.type === 'PERMISSION' ||
+      (vehicleProperties[property.name].supportedMakes
+        && !vehicleProperties[property.name].supportedMakes.includes(make))
+    ) {
       return null;
     } else if (property.componentType === 'VehicleProperty') {
       return (
@@ -78,8 +82,7 @@ export const Properties = ({
     } else if (property.componentType === 'SetVehicleProperty') {
       const { targetProperty } = property;
       return (
-        info[targetProperty] &&
-        typeof info[targetProperty] === 'number' && (
+        info[targetProperty] && !info[targetProperty].error && (
           <SetVehicleProperty
             property={property}
             key={property.name}
@@ -117,8 +120,6 @@ export const Properties = ({
       return null;
     }
   });
-
-  return properties;
 };
 
 /**

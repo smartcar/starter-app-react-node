@@ -3,7 +3,7 @@
  * For the complete list of available endpoints, please visit our documentation page:
  * https://smartcar.com/docs/api/#get-all-vehicles
  */
-const properties = {
+export const properties = {
   // Identifying information: id, make, model, year
   attributes: {
     name: 'attributes',
@@ -188,12 +188,13 @@ const energyUtilitiesConfig = {
   },
   mode: 'test',
   unitSystem: 'imperial',
-  brandSelect: 'TESLA',
+  // brandSelect: 'TESLA',
   singleSelect: false,
   singleSelectVin: '',
   vehicleProperties: [
     // the order will dictate the order of the UI components
     properties.attributes, // a REQUIRED endpoint for this app
+    properties.startStopCharge,
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,
@@ -207,6 +208,7 @@ const energyUtilitiesConfig = {
     properties.wattage,
     properties.amperage,
     properties.setAmperage,
+    properties.disconnect,
   ],
 };
 
@@ -227,6 +229,7 @@ const autoInsuranceConfig = {
     properties.location,
     properties.engineOil,
     properties.tirePressure,
+    properties.disconnect,
   ],
 };
 
@@ -250,6 +253,7 @@ const carSharingConfig = {
     properties.iceRange,
     properties.evRange,
     properties.odometer,
+    properties.disconnect,
   ],
 };
 
@@ -270,6 +274,7 @@ const roadsideAssistanceConfig = {
     properties.odometer,
     properties.tirePressure,
     properties.engineOil,
+    properties.disconnect,
   ],
 };
 
@@ -279,7 +284,7 @@ const buildYourOwnConfig = {
    */
   staticText: {
     appName: 'Your App name',
-    loadingMessage: 'Loading...'
+    loadingMessage: 'Loading...',
   },
 
   /**
@@ -306,4 +311,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = roadsideAssistanceConfig;
+export const config = energyUtilitiesConfig;

@@ -1,4 +1,4 @@
-const properties = {
+export const properties = {
   attributes: {
     name: 'attributes',
     permission: 'read_vehicle_info',
@@ -267,7 +267,7 @@ const buildYourOwnConfig = {
    */
   staticText: {
     appName: 'Your App name',
-    loadingMessage: 'Loading...'
+    loadingMessage: 'Loading...',
   },
 
   /**
@@ -294,4 +294,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = roadsideAssistanceConfig;
+export const config = energyUtilitiesConfig;

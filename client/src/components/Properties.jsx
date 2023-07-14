@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatName, timeDiff } from '../utils';
-import { config } from '../config';
+import { config, properties as vehicleProperties } from '../config';
 
 const isMetric = config.unitSystem === 'metric';
 const staticText = {
@@ -47,6 +47,7 @@ const staticText = {
  */
 export const Properties = ({
   info,
+  make,
   newVehicleProperty,
   setNewVehicleProperty,
   updateProperty,
@@ -79,7 +80,8 @@ export const Properties = ({
       const { targetProperty } = property;
       return (
         info[targetProperty] &&
-        typeof info[targetProperty] === 'number' && (
+        (!vehicleProperties[targetProperty]?.supportedMakes ||
+          vehicleProperties[targetProperty].supportedMakes.includes(make)) && (
           <SetVehicleProperty
             property={property}
             key={property.name}

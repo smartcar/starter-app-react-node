@@ -15,6 +15,7 @@ const properties = {
   amperage: {
     name: 'amperage',
     permission: 'read_charge',
+    supportedMakes: ['TESLA'],
     requestType: 'GET',
     componentType: 'VehicleProperty',
     text: 'Amperage',
@@ -22,6 +23,7 @@ const properties = {
   setAmperage: {
     name: 'setAmperage',
     permission: 'control_charge',
+    supportedMakes: ['TESLA'],
     requestType: 'POST',
     componentType: 'SetVehicleProperty',
     targetProperty: 'amperage',
@@ -45,6 +47,7 @@ const properties = {
   chargeCompletion: {
     name: 'chargeCompletion',
     permission: 'read_charge',
+    supportedMakes: ['CADILLAC', 'CHEVROLET', 'TESLA'],
     requestType: 'GET',
     componentType: 'VehicleProperty',
     text: 'Time to completion',
@@ -163,6 +166,7 @@ const properties = {
   voltage: {
     name: 'voltage',
     permission: 'read_charge',
+    supportedMakes: ['CADILLAC', 'CHEVROLET', 'TESLA'],
     requestType: 'GET',
     componentType: 'VehicleProperty',
     text: 'Voltage',
@@ -170,6 +174,7 @@ const properties = {
   wattage: {
     name: 'wattage',
     permission: 'read_charge',
+    supportedMakes: ['TESLA'],
     requestType: 'GET',
     componentType: 'VehicleProperty',
     text: 'Wattage',

@@ -57,7 +57,9 @@ export const Properties = ({
   const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
 
   const properties = config.vehicleProperties.map((property) => {
-    if (property.componentType === 'VehicleProperty') {
+    if (info[property.name]?.error?.type === 'PERMISSION') {
+      return null;
+    } else if (property.componentType === 'VehicleProperty') {
       return (
         <VehicleProperty
           property={{ ...property, status: info[property.name] }}
@@ -76,7 +78,8 @@ export const Properties = ({
     } else if (property.componentType === 'SetVehicleProperty') {
       const { targetProperty } = property;
       return (
-        info[targetProperty] && (
+        info[targetProperty] &&
+        typeof info[targetProperty] === 'number' && (
           <SetVehicleProperty
             property={property}
             key={property.name}
@@ -122,10 +125,13 @@ export const Properties = ({
  *  Renders simple read only properties
  */
 const VehicleProperty = ({ property, text }) => {
+  const status =
+    property.status?.error?.message ||
+    staticText[property.name](property.status);
   return (
     <div id={property.name} className="property">
       <h3>{text}</h3>
-      <p>{staticText[property.name](property.status)}</p>
+      <p>{status}</p>
     </div>
   );
 };

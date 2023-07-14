@@ -194,6 +194,7 @@ const energyUtilitiesConfig = {
   vehicleProperties: [
     // the order will dictate the order of the UI components
     properties.attributes, // a REQUIRED endpoint for this app
+    properties.startStopCharge,
     properties.vin,
     properties.isPluggedIn,
     properties.chargeState,
@@ -207,6 +208,7 @@ const energyUtilitiesConfig = {
     properties.wattage,
     properties.amperage,
     properties.setAmperage,
+    properties.disconnect,
   ],
 };
 
@@ -227,6 +229,7 @@ const autoInsuranceConfig = {
     properties.location,
     properties.engineOil,
     properties.tirePressure,
+    properties.disconnect,
   ],
 };
 
@@ -250,6 +253,7 @@ const carSharingConfig = {
     properties.iceRange,
     properties.evRange,
     properties.odometer,
+    properties.disconnect,
   ],
 };
 
@@ -270,6 +274,7 @@ const roadsideAssistanceConfig = {
     properties.odometer,
     properties.tirePressure,
     properties.engineOil,
+    properties.disconnect,
   ],
 };
 

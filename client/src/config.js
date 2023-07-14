@@ -321,4 +321,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = energyUtilitiesConfig;
+export const config = autoInsuranceConfig;

@@ -57,8 +57,11 @@ export const Properties = ({
   const { chargeState, isPluggedIn } = info;
   const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
 
-  const properties = config.vehicleProperties.map((property) => {
-    if (info[property.name]?.error?.type === 'PERMISSION') {
+  return config.vehicleProperties.map((property) => {
+    if (info[property.name]?.error?.type === 'PERMISSION' ||
+      (vehicleProperties[property.name].supportedMakes
+        && !vehicleProperties[property.name].supportedMakes.includes(make))
+    ) {
       return null;
     } else if (property.componentType === 'VehicleProperty') {
       return (
@@ -79,9 +82,7 @@ export const Properties = ({
     } else if (property.componentType === 'SetVehicleProperty') {
       const { targetProperty } = property;
       return (
-        info[targetProperty] &&
-        (!vehicleProperties[targetProperty]?.supportedMakes ||
-          vehicleProperties[targetProperty].supportedMakes.includes(make)) && (
+        info[targetProperty] && (
           <SetVehicleProperty
             property={property}
             key={property.name}
@@ -119,8 +120,6 @@ export const Properties = ({
       return null;
     }
   });
-
-  return properties;
 };
 
 /**

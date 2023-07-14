@@ -188,7 +188,7 @@ const energyUtilitiesConfig = {
   },
   mode: 'test',
   unitSystem: 'imperial',
-  brandSelect: 'TESLA',
+  // brandSelect: 'TESLA',
   singleSelect: false,
   singleSelectVin: '',
   vehicleProperties: [

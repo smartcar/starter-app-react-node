@@ -55,7 +55,11 @@ export const Properties = ({
   disconnect,
 }) => {
   const { chargeState, isPluggedIn } = info;
-  const showChargeToggle = isPluggedIn && chargeState !== 'FULLY_CHARGED';
+  const showChargeToggle =
+    !isPluggedIn.error
+    && !chargeState.error
+    && isPluggedIn
+    && chargeState !== 'FULLY_CHARGED';
 
   return config.vehicleProperties.map((property) => {
     if (info[property.name]?.error?.type === 'PERMISSION' ||

@@ -82,7 +82,7 @@ export const Properties = ({
     } else if (property.componentType === 'SetVehicleProperty') {
       const { targetProperty } = property;
       return (
-        info[targetProperty] && (
+        info[targetProperty] && !info[targetProperty].error && (
           <SetVehicleProperty
             property={property}
             key={property.name}

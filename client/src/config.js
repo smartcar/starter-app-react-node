@@ -142,6 +142,7 @@ const properties = {
     componentType: 'VehicleProperty',
     text: 'Odometer',
   },
+  // requires isPluggedIn and chargeState to show
   startStopCharge: {
     name: 'startStopCharge',
     permission: 'control_charge',

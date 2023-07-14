@@ -157,8 +157,7 @@ const vehicleProperties = {
     endpoint: '/location',
     process: (batchResponse) => {
       try {
-        const location = batchResponse.location();
-        const { meta, ...remainingValues } = location;
+        const { meta, ...remainingValues } = batchResponse.location();;
         return remainingValues;
       } catch (err) {
         return handleError(err);
@@ -180,8 +179,7 @@ const vehicleProperties = {
     endpoint: '/tires/pressure',
     process: (batchResponse) => {
       try {
-        const tirePressure = batchResponse.tirePressure();
-        const { meta, ...remainingValues } = tirePressure;
+        const { meta, ...remainingValues } = batchResponse.tirePressure();
         return remainingValues;
       } catch (err) {
         return handleError(err);

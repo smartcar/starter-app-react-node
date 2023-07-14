@@ -58,9 +58,10 @@ export const Properties = ({
 }) => {
   const { chargeState, isPluggedIn } = info;
   const showChargeToggle =
-    !isPluggedIn.error
+    isPluggedIn
+    && !isPluggedIn.error
+    && chargeState
     && !chargeState.error
-    && isPluggedIn
     && chargeState !== 'FULLY_CHARGED';
 
   return config.vehicleProperties.map((property) => {

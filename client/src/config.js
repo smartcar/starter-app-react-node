@@ -3,7 +3,7 @@
  * For the complete list of available endpoints, please visit our documentation page:
  * https://smartcar.com/docs/api/#get-all-vehicles
  */
-const properties = {
+export const properties = {
   // Identifying information: id, make, model, year
   attributes: {
     name: 'attributes',
@@ -279,7 +279,7 @@ const buildYourOwnConfig = {
    */
   staticText: {
     appName: 'Your App name',
-    loadingMessage: 'Loading...'
+    loadingMessage: 'Loading...',
   },
 
   /**
@@ -306,4 +306,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = roadsideAssistanceConfig;
+export const config = energyUtilitiesConfig;

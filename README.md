@@ -54,4 +54,4 @@ For the complete list of available endpoints, please visit our documentation pag
    - `carSharingConfig` quick blurb about this
    - `roadsideAssistanceConfig` quick blurb about this
    - `buildYourOwnConfig`
-   The `autoInsuranceConfig` is set as the default. We recommend you explore each of the four sample configs before making your own! 
+   The `autoInsuranceConfig` is set as the default. Explore each of the four sample configs before making your own!

@@ -29,8 +29,7 @@ const App = () => {
       setError(null);
       setIsLoading(false);
     } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
+      setError(new Error(error.response.data.error || 'Unknown error'));
       setIsLoading(false);
     }
   };
@@ -144,6 +143,7 @@ const App = () => {
                 vehicles={vehicles}
                 setSelectedVehicle={setSelectedVehicle}
                 updateProperty={updateProperty}
+                setError={setError}
               />
             </>
           ) : (

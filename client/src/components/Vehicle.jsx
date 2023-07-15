@@ -9,6 +9,7 @@ const Vehicle = ({
   vehicles,
   setSelectedVehicle,
   updateProperty,
+  setError
 }) => {
   const { amperage, chargeLimit, id } = info;
   const attributes = vehicles.find((vehicle) => vehicle.id === id);
@@ -28,18 +29,25 @@ const Vehicle = ({
     });
   }, [chargeLimit, amperage]);
 
-  // Removes the loading screen if the vehicle has been retrieved
-  useEffect(() => {
-    setIsLoading(false);
-  }, [id]);
+  // // Removes the loading screen if the vehicle has been retrieved
+  // useEffect(() => {
+  //   setIsLoading(false);
+  // }, [id]);
 
   const handleVehicleChange = async (e) => {
-    setIsLoading(true);
-    // Obtains the selected vehicle id
-    const vehicleId = e.target.value;
-    const make = vehicles.find((vehicle) => vehicle.id === vehicleId).make;
-    const data = await api.getVehicle(vehicleId, make);
-    setSelectedVehicle(data);
+    try {
+      setError(null);
+      setIsLoading(true);
+      // Obtains the selected vehicle id
+      const vehicleId = e.target.value;
+      const make = vehicles.find((vehicle) => vehicle.id === vehicleId).make;
+      const data = await api.getVehicle(vehicleId, make);
+      setSelectedVehicle(data);
+      setIsLoading(false);
+    } catch (error) {
+      setError(new Error(error.response.data.error || 'Unknown error'));
+      setIsLoading(false);
+    }
   };
 
   return (

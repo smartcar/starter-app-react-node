@@ -81,7 +81,7 @@ const vehicleProperties = {
       try {
         const chargeLimit = batchResponse.chargeLimit();
         const limit = chargeLimit.limit;
-        return Math.round((Number(limit) + Number.EPSILON) * 100) / 100;
+        return Math.round(Number(limit) * 100);
       } catch (err) {
         return handleError(err);
       }

@@ -144,11 +144,10 @@ app.post('/vehicle/charge-limit', authenticate, async function(req, res) {
       throw new Error('Charge limit is not a number');
     }
     limit = Number(limit);
-
     const { accessToken } = req.tokens;
     const vehicleId = req.query.vehicleId;
     const vehicle = createSmartcarVehicle(vehicleId, accessToken);
-    const result = await vehicle.setChargeLimit(limit);
+    const result = await vehicle.setChargeLimit(limit / 100);
     res.status(200).json({
       limit,
       message: result.message || 'Successfully sent request to vehicle',

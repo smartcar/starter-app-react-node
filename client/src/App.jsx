@@ -108,7 +108,7 @@ const App = () => {
           chargeState: data.chargeState,
         });
       } else if (property === 'chargeLimit') {
-        const { data } = await api.setChargeLimit(vehicleId, action / 100);
+        const { data } = await api.setChargeLimit(vehicleId, action);
         setSelectedVehicle({
           ...selectedVehicle,
           chargeLimit: data.limit,

@@ -23,7 +23,7 @@ const Vehicle = ({
   // Resets state when vehicle is switched or if the current vehicle's status has changed
   useEffect(() => {
     setNewVehicleProperty({
-      chargeLimit: typeof chargeLimit === 'number' ? chargeLimit * 100 : '',
+      chargeLimit: typeof chargeLimit === 'number' ? chargeLimit : '',
       amperage: typeof amperage === 'number' ? amperage : '',
     });
   }, [chargeLimit, amperage]);

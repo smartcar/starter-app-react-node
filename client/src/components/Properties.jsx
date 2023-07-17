@@ -69,7 +69,7 @@ export const Properties = ({
     ) {
       return null;
     } else if (property.componentType === 'VehicleProperty') {
-      if (!info[property.name]) return null;
+      if (info[property.name] === undefined) return null;
 
       return (
         <VehicleProperty
@@ -79,7 +79,7 @@ export const Properties = ({
         />
       );
     } else if (property.componentType === 'VehiclePropertyList') {
-      if (!info[property.name]) return null;
+      if (info[property.name] === undefined) return null;
 
       return (
         <VehiclePropertyList

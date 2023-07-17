@@ -28,6 +28,11 @@ const properties = {
     componentType: 'SetVehicleProperty',
     targetProperty: 'amperage',
     text: 'Set new amperage',
+    htmlAttributes: {
+      type: "number",
+      min: 0,
+      step: 1,
+    }
   },
   batteryLevel: {
     name: 'batteryLevel',
@@ -66,6 +71,12 @@ const properties = {
     componentType: 'SetVehicleProperty',
     targetProperty: 'chargeLimit',
     text: 'Set new limit',
+    htmlAttributes: {
+      type: "number",
+      min: 50, // min and max may vary by oem
+      max: 100,
+      step: 1,
+    }
   },
   chargeState: {
     // returns CHARGING FULLY_CHARGED NOT_CHARGING

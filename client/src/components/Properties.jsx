@@ -175,6 +175,7 @@ const SetVehicleProperty = ({
 }) => {
   // Updates state with new property value to be sent to server
   const handlePropertyChange = (e) => {
+    e.preventDefault();
     setNewVehicleProperty({
       ...newVehicleProperty,
       [targetProperty]: e.target.value,
@@ -182,29 +183,31 @@ const SetVehicleProperty = ({
   };
 
   // Sends request to server to update the target property
-  const handlePropertyConfirmation = () => {
+  const handlePropertyConfirmation = (e) => {
+    e.preventDefault();
     updateProperty(targetProperty, newVehicleProperty[targetProperty]);
   };
 
   return (
     <div id={property.name} className="editable-property">
-      <input
-        className="property-update"
-        name={property.name}
-        type="number"
-        step="1"
-        min="0"
-        value={newVehicleProperty[targetProperty]}
-        onChange={handlePropertyChange}
-      />
-      <button
-        className="property-confirm"
-        name={property.name}
-        disabled={newVehicleProperty[targetProperty] === currentValue}
-        onClick={handlePropertyConfirmation}
-      >
-        {text}
-      </button>
+      <form>
+        <input
+          className="property-update"
+          name={property.name}
+          value={newVehicleProperty[targetProperty]}
+          onChange={handlePropertyChange}
+          {...property.htmlAttributes}
+        />
+        <button
+          type="submit"
+          className="property-confirm"
+          name={property.name}
+          disabled={newVehicleProperty[targetProperty] === currentValue}
+          onClick={handlePropertyConfirmation}
+        >
+          {text}
+        </button>
+      </form>
     </div>
   );
 };

@@ -124,8 +124,8 @@ const vehicleProperties = {
     endpoint: '/fuel',
     process: (batchResponse) => {
       try {
-        const fuel = batchResponse.fuel();
-        return fuel;
+        const { meta, ...remainingValues } = batchResponse.fuel();
+        return remainingValues;
       } catch (err) {
         return handleError(err);
       }

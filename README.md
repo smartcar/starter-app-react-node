@@ -1,11 +1,11 @@
 # Starter app - React - Node
-This starter app allows you configure your own app using Smartcar's popular vehicle endpoints.
-Your users will be able to authorize their vehicles, see details, and perform actions based on the the properties you select in the config file!
+This starter app allows you to configure your own app using Smartcar's popular vehicle endpoints.
+Your users will be able to authorize their vehicles, see details, and perform actions based on the properties you select in the config file!
 
 ## What you can expect:
 - The implementation of Smartcar Connect, allowing users to authorize vehicles through the Connect flow.
 - A sample application page displaying the authorized vehicles and providing users with the option to disconnect vehicles if desired.
-- Four pre-made configs for four different use cases: Energy and Utilities, Auto Insurance, Car Sharing, and Roasdside Assitance.
+- Four pre-made configs for four different use cases: Energy and Utilities, Auto Insurance, Car Sharing, and Roadside Assitance.
 
 <!-- TODO: Give brief synopsis "what you can expect" for each pre-made config -->
 
@@ -45,7 +45,7 @@ For the complete list of available endpoints, please visit our documentation pag
 
 3. Please follow the instructions in the server-readme to set up a Node backend with Express. You will be prompted to provide your Smartcar keys and JWT key for storing the access token in a cookie. Feel free to review and adjust the Smartcar vehicle endpoints as per your requirements...
 
-4. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary  configurations for the Connect flow to suit your specific use case.
+4. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary configurations for the Connect flow to suit your specific use case.
    
 6. Customize your config and build your app! The config file has everything you need to get started, take a look at each of the following:
    - `properties` contains information needed to render the components and functionalities. Each vehicle property included here maps to popular Smartcar endpoints. There are many more on our [documentation page](https://smartcar.com/docs/api/#get-all-vehicles)!

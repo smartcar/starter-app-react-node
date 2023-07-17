@@ -114,14 +114,19 @@ const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = [], 
   
   // Generate list of vehicle endpoints
   const endpoints = [];
+  const supportedProperties = [];
   requestedProperties.forEach(requestedProperty => {
     const { supportedMakes, endpoint} = vehicleProperties[requestedProperty];
     let newEndpoint;
-    if (supportedMakes) {
-      newEndpoint = supportedMakes.includes(make) ? endpoint(make) : null;
+    if (supportedMakes && !supportedMakes.includes(make)) return;
+
+    if (supportedMakes && supportedMakes.includes(make)) {
+      newEndpoint = endpoint(make);
     } else {
       newEndpoint= endpoint;
     }
+    supportedProperties.push(requestedProperty);
+
     if(newEndpoint && !endpoints.includes(newEndpoint)) endpoints.push(newEndpoint);
   })
 
@@ -129,9 +134,13 @@ const getVehicleInfo = async (vehicleId, accessToken, requestedProperties = [], 
   const batchResponse = await vehicle.batch(endpoints);
 
   // process batchResponse, populate response body
-  requestedProperties.forEach(requestedProperty => {
-    const { process } = vehicleProperties[requestedProperty];
-    vehicleInfo[requestedProperty] = process(batchResponse, make);
+  supportedProperties.forEach(property => {
+    const { process } = vehicleProperties[property];
+    const value = process(batchResponse, make);
+    // omit properties with permission errors (likely incompatible endpoint)
+    if (value.error && value.error.type === 'PERMISSION') return;
+
+    vehicleInfo[property] = value;
   })
   return vehicleInfo;
 }

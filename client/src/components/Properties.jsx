@@ -192,7 +192,7 @@ const SetVehicleProperty = ({
 
   return (
     <div id={property.name} className="editable-property">
-      <form>
+      <form onSubmit={handlePropertyConfirmation}>
         <input
           className="property-update"
           name={property.name}
@@ -205,7 +205,6 @@ const SetVehicleProperty = ({
           className="property-confirm"
           name={property.name}
           disabled={newVehicleProperty[targetProperty] === currentValue}
-          onClick={handlePropertyConfirmation}
         >
           {text}
         </button>

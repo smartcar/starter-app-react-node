@@ -193,12 +193,35 @@ const properties = {
   },
 };
 
+const autoInsuranceConfig = {
+  staticText: {
+    appName: 'Sky Insurance',
+    loadingMessage: 'Rest insured...your vehicle info is on the way!',
+  },
+  mode: 'live',
+  unitSystem: 'imperial',
+  brandSelect: '',
+  singleSelect: true,
+  singleSelectVin: '',
+  requiredVehicleProperties: [
+    properties.attributes,
+  ],
+  vehicleProperties: [
+    properties.vin,
+    properties.odometer,
+    properties.location,
+    properties.engineOil,
+    properties.tirePressure,
+    properties.disconnect,
+  ],
+};
+
 const energyUtilitiesConfig = {
   staticText: {
     appName: 'ChargeUp',
     loadingMessage: 'Charging up the information superhighway...buckle up!',
   },
-  mode: 'test',
+  mode: 'live',
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
   singleSelect: false,
@@ -226,35 +249,12 @@ const energyUtilitiesConfig = {
   ],
 };
 
-const autoInsuranceConfig = {
-  staticText: {
-    appName: 'Sky Insurance',
-    loadingMessage: 'Rest insured...your vehicle info is on the way!',
-  },
-  mode: 'test',
-  unitSystem: 'metric',
-  brandSelect: '',
-  singleSelect: true,
-  singleSelectVin: '',
-  requiredVehicleProperties: [
-    properties.attributes,
-  ],
-  vehicleProperties: [
-    properties.vin,
-    properties.odometer,
-    properties.location,
-    properties.engineOil,
-    properties.tirePressure,
-    properties.disconnect,
-  ],
-};
-
 const carSharingConfig = {
   staticText: {
     appName: 'CarShare',
     loadingMessage: 'Roaming the streets for your perfect ride...',
   },
-  mode: 'test',
+  mode: 'live',
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
@@ -263,8 +263,8 @@ const carSharingConfig = {
     properties.attributes,
   ],
   vehicleProperties: [
-    properties.vin,
     properties.lockUnlock,
+    properties.vin,
     properties.location,
     properties.fuel,
     properties.batteryLevel,
@@ -280,7 +280,7 @@ const roadsideAssistanceConfig = {
     appName: 'RoadsideAssist',
     loadingMessage: 'Roadside assistance on standby...your vehicle details coming up!'
   },
-  mode: 'test',
+  mode: 'live',
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
@@ -303,7 +303,7 @@ const buildYourOwnConfig = {
    * Section 1: Personalize your app!
    */
   staticText: {
-    appName: 'Your App name',
+    appName: "[Your app's name]",
     loadingMessage: 'Loading...',
   },
 
@@ -333,4 +333,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = autoInsuranceConfig;
+export const config = buildYourOwnConfig;

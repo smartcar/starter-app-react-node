@@ -48,10 +48,17 @@ For the complete list of available endpoints, please visit our documentation pag
 4. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary  configurations for the Connect flow to suit your specific use case.
    
 6. Customize your config and build your app! The config file has everything you need to get started, take a look at each of the following:
-   - `properties` maps each vehicle property to popular Smartcar endpoints. There are many more on our [documentation page](https://smartcar.com/docs/api/#get-all-vehicles)!
-   - `energyUtilitiesConfig` quick blurb about this
-   - `autoInsuranceConfig` quick blurb about this
-   - `carSharingConfig` quick blurb about this
-   - `roadsideAssistanceConfig` quick blurb about this
-   - `buildYourOwnConfig`
-   The `autoInsuranceConfig` is set as the default. Explore each of the four sample configs before making your own!
+   - `properties` contains information needed to render the components and functionalities. Each vehicle property included here maps to popular Smartcar endpoints. There are many more on our [documentation page](https://smartcar.com/docs/api/#get-all-vehicles)!
+   -  There are four pre-made configs to demonstrate Smartcar integration in four different industries: auto insurance, energy/utilities, car share, and roadside assistance. The `autoInsuranceConfig` is set as the default. Explore each of the four sample configs before making your own!
+
+**What you can expect in the pre-made configs:** 
+|  |  |
+| :---: | ---- |
+| <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/5a1a4b75-2aff-4b0b-b7fb-a74016a31b0a" alt="car share" width=300px /> | The app comes with the implementation of Smartcar Connect, allowing users to authorize vehicles through the Connect flow. |
+| <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/08fd61db-5b0e-4d89-a82e-0f7fea3677a9" alt="auto insurance" width=300px /> | `autoInsuranceConfig`: **Single Select** allows users to connect one of their vehicles. Once authorized, review up-to-date, accurate vehicle data such as VIN, mileage, location, engine oil, and tire pressure. |
+| <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/8a3953ff-5197-4ed9-a531-9fb6cc80f1f5" alt="energy utilities" width=300px /> | `energyUtilitiesConfig`: **Brand Select** (TESLA) skips the brand selection step of the Connect flow and directs users to the login page for Tesla. Once connected, users can review EV statistics of their Tesla vehicle like charge state, time to completion, battery level, battery range, charge limit, battery capacity, voltage, wattage, and amperage. Users may also perform actions such as starting and stopping charge, setting the charge limit, and setting the amperage. |
+| <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/bf961e97-02aa-471e-bc8b-2ff70774b0ff" alt="car share" width=300px /> | `carShareConfig`: Once authorized, the user can review the vehicle's location, odometer, and fuel tank or battery status depending on the vehicle. Users can also lock and unlock the vehicle. |
+| <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/9b4c12d8-1b99-42f6-a6b5-259b37514dcb" alt="car share" width=300px />___________________________________________ | `roadsideAssistanceConfig`: Retrieve up-to-date status about a vehicle's location, odometer, tire pressure, and engine oil. |
+
+
+

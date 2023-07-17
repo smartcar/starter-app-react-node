@@ -65,12 +65,12 @@ export const Properties = ({
     && chargeState !== 'FULLY_CHARGED';
 
   return config.vehicleProperties.map((property) => {
-    if (info[property.name]?.error?.type === 'PERMISSION' ||
-      (property.supportedMakes
-        && !property.supportedMakes.includes(make))
+    if (property.supportedMakes && !property.supportedMakes.includes(make)
     ) {
       return null;
     } else if (property.componentType === 'VehicleProperty') {
+      if (!info[property.name]) return null;
+
       return (
         <VehicleProperty
           property={{ ...property, status: info[property.name] }}
@@ -79,6 +79,8 @@ export const Properties = ({
         />
       );
     } else if (property.componentType === 'VehiclePropertyList') {
+      if (!info[property.name]) return null;
+
       return (
         <VehiclePropertyList
           property={{ ...property, status: info[property.name] }}

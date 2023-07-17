@@ -29,7 +29,7 @@ const App = () => {
       setError(null);
       setIsLoading(false);
     } catch (error) {
-      setError(new Error(error.response.data.error || 'Unknown error'));
+      setError(new Error(error.response?.data?.error || 'Unknown error'));
       setIsLoading(false);
     }
   };
@@ -68,7 +68,7 @@ const App = () => {
         setError(null);
         setIsLoading(false);
       } catch (error) {
-        setError(new Error(error.response.data.error || 'Unknown error'));
+        setError(new Error(error.response?.data?.error || 'Unknown error'));
         setIsLoading(false);
       }
       return;
@@ -80,7 +80,7 @@ const App = () => {
         setVehicles([]);
         return;
       } catch (error) {
-        setError(new Error(error.response.data.error || 'Unknown error'));
+        setError(new Error(error.response?.data?.error || 'Unknown error'));
       }
       // if disconnect all fails, we'll fetch any remaining vehicles
       try {
@@ -91,7 +91,7 @@ const App = () => {
         setSelectedVehicle(data.selectedVehicle);
         setVehicles(data.vehicles);
       } catch (error) {
-        setError(new Error(error.response.data.error || 'Unknown error'));
+        setError(new Error(error.response?.data?.error || 'Unknown error'));
         setIsLoading(false);
       }
     }
@@ -124,8 +124,7 @@ const App = () => {
       }
       setError(null);
     } catch (error) {
-      const errorMessage = error.response.data.error;
-      setError(new Error(errorMessage));
+      setError(new Error(error.response?.data?.error));
     }
   };
 

@@ -38,7 +38,7 @@ const App = () => {
     clientId: process.env.REACT_APP_CLIENT_ID,
     redirectUri: process.env.REACT_APP_REDIRECT_URI,
     // set scope of permissions: https://smartcar.com/docs/api/#permissions
-    scope: [...getPermissions()],
+    scope: getPermissions(),
     mode: config.mode, // one of ['live', 'test', 'simulated']
     onComplete,
   });

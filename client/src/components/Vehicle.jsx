@@ -45,7 +45,7 @@ const Vehicle = ({
       setSelectedVehicle(data);
       setIsLoading(false);
     } catch (error) {
-      setError(new Error(error.response.data.error || 'Unknown error'));
+      setError(new Error(error.response?.data?.error || 'Unknown error'));
       setIsLoading(false);
     }
   };

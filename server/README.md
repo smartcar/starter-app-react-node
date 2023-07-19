@@ -56,6 +56,7 @@ $ export SMARTCAR_MAT=<your-management-api-token>
   - `vehicle.unsubscribe("{managementApiToken}", "{webhookId}");`
 
 **Additional Resources**:
+
 [Integration-guide: add webhook notifications](https://smartcar.com/docs/integration-guide/plan-your-integration/add-webhook-notifications/#1-types-of-webhooks)
 
 [Blog: How to use scheduled webhooks](https://smartcar.com/blog/how-to-use-scheduled-webhooks/)

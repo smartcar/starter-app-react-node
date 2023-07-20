@@ -11,6 +11,12 @@ $ export REACT_APP_REDIRECT_URI=https://javascript-sdk.smartcar.com/v2/redirect?
 $ export REACT_APP_SERVER=http://localhost:8000
 ```
 
+To install the required dependencies and run this React app:
+```bash
+$ npm install
+$ npm start
+```
+
 In production, replace the localhosts with the correct client and server urls.
 
 ## About the code

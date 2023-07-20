@@ -40,11 +40,21 @@ For the complete list of available endpoints, please visit our documentation pag
 
 2. In the Configuration tab of your [Smartcar Developer Dashboard](https://dashboard.smartcar.com/signup), set your `redirect_uri` with the one above.
 
-3. Please follow the instructions in the server-readme to set up a Node backend with Express. You will be prompted to provide your Smartcar keys and JWT key for storing the access token in a cookie. Feel free to review and adjust the Smartcar vehicle endpoints as per your requirements...
+3. Make sure you have cloned this repo and change into the server directory
+```bash
+$ git clone https://github.com/smartcar/starter-app-react-node.git
+$ cd starter-app-react-node/server
+```
 
-4. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary configurations for the Connect flow to suit your specific use case.
+4. Please follow the instructions in the server-readme to set up a Node backend with Express. You will be prompted to provide your Smartcar keys and JWT key for storing the access token in a cookie. Feel free to review and adjust the Smartcar vehicle endpoints as per your requirements...
+
+5. Open a second terminal at the root directory of this project and change into the client directory
+```bash
+$ cd client
+```
+6. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary configurations for the Connect flow to suit your specific use case.
    
-5. Customize your configurations and build your app! The configuration file contains everything you need to get started. Please take a look at each of the following items:
+7. Customize your configurations and build your app! The configuration file contains everything you need to get started. Please take a look at each of the following items:
    - `properties` contains information needed to render the components and functionalities. Each vehicle property included here is mapped to popular Smartcar endpoints. Additionally, there are many more endpoints available on our [documentation page](https://smartcar.com/docs/api/#get-all-vehicles)!
    -  We offer four pre-made configurations to showcase Smartcar integration across four different industries: auto insurance, energy/utilities, car sharing, and roadside assistance. The default configuration is `autoInsuranceConfig`. We encourage you to explore each of these sample configurations before creating your own!
 

@@ -14,10 +14,10 @@ $ export JWT_SECRET_KEY=<your-jsonwebtoken-key>
 
 In production, replace the localhosts with the correct client and server urls.
 
-To install the required dependencies and run this Node app -
+To install the required dependencies and run this Node app in development
 ```bash
 $ npm install
-$ npm start
+$ npm run debug
 ```
 
 ## About the code

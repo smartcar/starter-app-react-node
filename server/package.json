@@ -4,7 +4,8 @@
   "description": "Getting Started with Node SDK",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "debug": "nodemon index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",

@@ -52,8 +52,6 @@ const App = () => {
       },
       // only allow users to authenticate ONE vehicle
       singleSelect: config.singleSelect,
-      // only allow users to authenticate ONE vehicle specified by VIN
-      singleSelectVin: config.singleSelectVin,
     });
 
   const disconnect = async (e) => {

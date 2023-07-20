@@ -202,7 +202,6 @@ const autoInsuranceConfig = {
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
-  singleSelectVin: '',
   requiredVehicleProperties: [
     properties.attributes,
   ],
@@ -225,7 +224,6 @@ const energyUtilitiesConfig = {
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
   singleSelect: false,
-  singleSelectVin: '',
   requiredVehicleProperties: [
     properties.attributes,
   ],
@@ -258,7 +256,6 @@ const carSharingConfig = {
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
-  singleSelectVin: '',
   requiredVehicleProperties: [
     properties.attributes,
   ],
@@ -284,7 +281,6 @@ const roadsideAssistanceConfig = {
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
-  singleSelectVin: '',
   requiredVehicleProperties: [
     properties.attributes,
   ],
@@ -315,7 +311,6 @@ const buildYourOwnConfig = {
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: false,
-  singleSelectVin: '',
 
   /**
    * Section 3: Build the app! Add the desired properties from the properties object. This will decide the following:

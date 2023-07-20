@@ -74,5 +74,42 @@ The four premade configurations are designed for each of the primary use cases s
 | <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/bf961e97-02aa-471e-bc8b-2ff70774b0ff" alt="car share" width=300px /> | `carShareConfig`: Once authorized, the user can review the vehicle's location, odometer, and fuel tank or battery status (depending on the vehicle). Additionally, users can lock and unlock the vehicle. |
 | <img src="https://github.com/smartcar/starter-app-react-node/assets/119897746/9b4c12d8-1b99-42f6-a6b5-259b37514dcb" alt="car share" width=300px />___________________________________________ | `roadsideAssistanceConfig`: Retrieve up-to-date status about a vehicle's location, odometer, tire pressure, and engine oil. |
 
+# Adding new endpoints:
+This starter app includes popular Smartcar endpoints, but we're constantly working to add new ones. Here is an example of adding the `read_compass` endpoint to give you an idea for adding a simple `GET` endpoint.
+1. Check the [documentation for read_compass](https://smartcar.com/docs/api/#get-compass).
+2. This endpoint has two properties: heading and direction. I only want **direction** so I'll add that as a property in config.js in the client repo. Note that this is a Tesla-specific endpoint
+```
+direction: {
+  name: 'direction',
+  permission: 'read_compass',
+  supportedMakes: ['TESLA'],
+  requestType: 'GET',
+  componentType: 'VehicleProperty',
+  text: 'Direction',
+}
+```
+3. Now I'll include `properties.direction` to my config.
+3. Looking at the payload in the documentation, I'm happy with using the returned string for direction as is "SW", so in the `staticText` object in `Properties.jsx`, I'll add
+   `direction: (status) => status,` which will output the returned string in the Vehicle details page.
+5. In the `vehicleProperties.js` file in the server, I'll need to add a field for direction. I can check the documentation to see how this Tesla endpoint is constructed. In debug mode, I saw that `batchResponse` now has a `teslaCompass` method which returns an object with a `direction` field, which I will return.
+```
+  direction: {
+    endpoint: (make) => `/${make.toLowerCase()}/compass`,
+    supportedMakes: ['TESLA'],
+    process: (batchResponse, make) => {
+      try {
+        if (make === 'TESLA') {
+          return batchResponse.teslaCompass().direction;
+        }
+        throw new Error ('Unsupported make')
+      } catch (err) {
+        return handleError(err);
+      }
+    },
+  }
+```
+6. Test the flow with a Tesla vehicle, you should now see a Direction field displayed.
 
+That concludes an example for adding a new GET endpoint. For adding new POST endpoints, that may involve adding a new component type in `Properties.jsx` and a new method in `api.js` on the client. On the server, a new route may be needed.
 
+Remember to check our [documentation](https://smartcar.com/docs/api/#get-all-vehicles) for details on each endpoints as well staying up to date with new endpoints being released!

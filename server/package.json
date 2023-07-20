@@ -1,7 +1,7 @@
 {
   "name": "starter-app-react-node-server",
   "version": "1.0.0",
-  "description": "Getting Started with Node SDK",
+  "description": "Node server for the starter app",
   "main": "index.js",
   "scripts": {
     "debug": "nodemon index.js",

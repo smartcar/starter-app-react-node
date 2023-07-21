@@ -66,7 +66,6 @@ The four premade configurations are designed for each of the primary use cases s
 4. **Roadside Assistance**: Similar to the auto insurance use case, you can leverage the API endpoints for location, tire pressure, engine oil life, as well as fuel tank/battery level to check the vehicle's health and determine if any maintenance is required.
 
 
-![roadsideAssistance](https://github.com/smartcar/starter-app-react-node/assets/119897746/4392e843-3b5d-407a-a74c-eb98f1c02fb3)
 
 **What you can expect in the premade configurations:** 
 |  |  |

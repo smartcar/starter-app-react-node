@@ -55,7 +55,7 @@ $ cd client
 6. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary configurations for the Connect flow to suit your specific use case.
    
 7. Customize your configurations and build your app! The configuration file contains everything you need to get started. Please take a look at each of the following items:
-   - `properties` contains information needed to render the components and functionalities. Each vehicle property included here is mapped to popular Smartcar endpoints. Additionally, there are many more endpoints available on our [documentation page](https://smartcar.com/docs/api-reference/management/all-vehicless)!
+   - `properties` contains information needed to render the components and functionalities. Each vehicle property included here is mapped to popular Smartcar endpoints. Additionally, there are many more endpoints available on our [documentation page](https://smartcar.com/docs/api-reference/management/all-vehicles)!
    -  We offer four pre-made configurations to showcase Smartcar integration across four different industries: auto insurance, energy/utilities, car sharing, and roadside assistance. The default configuration is `autoInsuranceConfig`. We encourage you to explore each of these sample configurations before creating your own!
 
 ## Premade configurations

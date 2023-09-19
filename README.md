@@ -114,4 +114,4 @@ direction: {
 
 That concludes an example for adding a new GET endpoint. For adding new POST endpoints, that may involve adding a new component type in `Properties.jsx` and a new method in `api.js` on the client. On the server, a new route may be needed.
 
-Remember to check our [documentation](https://smartcar.com/docs/api-reference/management/all-vehicless) for details on each endpoints as well staying up to date with new endpoints being released!
+Remember to check our [documentation](https://smartcar.com/docs/api-reference/management/all-vehicles) for details on each endpoints as well staying up to date with new endpoints being released!

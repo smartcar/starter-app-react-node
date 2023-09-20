@@ -55,7 +55,7 @@ $ cd client
 6. Follow the instructions in the client-readme to set up a React front end with Axios as the HTTP client. Please review how `smartcar` is instantiated in `App.jsx` and make any necessary configurations for the Connect flow to suit your specific use case.
    
 7. Customize your configurations and build your app! The configuration file contains everything you need to get started. Please take a look at each of the following items:
-   - `properties` contains information needed to render the components and functionalities. Each vehicle property included here is mapped to popular Smartcar endpoints. Additionally, there are many more endpoints available on our [documentation page](https://smartcar.com/docs/api/#get-all-vehicles)!
+   - `properties` contains information needed to render the components and functionalities. Each vehicle property included here is mapped to popular Smartcar endpoints. Additionally, there are many more endpoints available on our [documentation page](https://smartcar.com/docs/api-reference/management/all-vehicles)!
    -  We offer four pre-made configurations to showcase Smartcar integration across four different industries: auto insurance, energy/utilities, car sharing, and roadside assistance. The default configuration is `autoInsuranceConfig`. We encourage you to explore each of these sample configurations before creating your own!
 
 ## Premade configurations
@@ -78,7 +78,7 @@ The four premade configurations are designed for each of the primary use cases s
 
 # Adding new endpoints:
 This starter app includes popular Smartcar endpoints, but we're constantly working to add new ones. Here is an example of adding the `read_compass` endpoint to give you an idea for adding a simple `GET` endpoint.
-1. Check the [documentation for read_compass](https://smartcar.com/docs/api/#get-compass).
+1. Check the [documentation for read_compass](https://smartcar.com/docs/api-reference/tesla/get-compass-heading).
 2. This endpoint has two properties: heading and direction. I only want **direction** so I'll add that as a property in config.js in the client repo. Note that this is a Tesla-specific endpoint
 ```
 direction: {
@@ -114,4 +114,4 @@ direction: {
 
 That concludes an example for adding a new GET endpoint. For adding new POST endpoints, that may involve adding a new component type in `Properties.jsx` and a new method in `api.js` on the client. On the server, a new route may be needed.
 
-Remember to check our [documentation](https://smartcar.com/docs/api/#get-all-vehicles) for details on each endpoints as well staying up to date with new endpoints being released!
+Remember to check our [documentation](https://smartcar.com/docs/api-reference/management/all-vehicles) for details on each endpoints as well staying up to date with new endpoints being released!

@@ -41,9 +41,7 @@ This Starter App supports live vehicle connections by default. Should you prefer
     - `jsonwebtoken-key`: You can obtain a secret key using a generator like UUID or create one yourself. It should be a long and secure string, similar to a passphrase.
 
 2. In the Configuration tab of your [Smartcar Developer Dashboard](https://dashboard.smartcar.com), set your `redirect_uri`.
-    <ol type="a">
-      <li>`redirect_uri`: As we'll be utilizing the Smartcar JS SDK and hosting the client on port 3000, the corresponding URI will be: `https://javascript-sdk.smartcar.com/v2/redirect?app_origin=http://localhost:3000`</li>
-    </ol>
+  a. `redirect_uri`: As we'll be utilizing the Smartcar JS SDK and hosting the client on port 3000, the corresponding URI will be: `https://javascript-sdk.smartcar.com/v2/redirect?app_origin=http://localhost:3000`
 
 3. Make sure you have cloned this repo and change into the server directory
 ```bash

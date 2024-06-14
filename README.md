@@ -31,14 +31,17 @@ For the complete list of available endpoints, please visit our documentation pag
 - **client**: Smartcar Javascript SDK and React
 - **server**: Node and Express
 
+## Live or Simulated Vehicles:
+This Starter App supports live vehicle connections by default. Should you prefer to test with a simulated vehicle, the auth client builder mode can be set to simulated and a simulated vehicle created. Please see our [documentation](https://smartcar.com/docs/help/vehicle-simulator) for further instructions. 
+
 ## Instructions
 
 1. Before we get started, create an application on the [Smartcar's Developer Dashboard](https://dashboard.smartcar.com/signup) to obtain your API keys. The following keys will be required:
     - `client_id`: This key can be found in your Smartcar Developer Dashboard under the 'Configuration' tab.
-    - `redirect_uri`: As we'll be utilizing the Smartcar JS SDK and hosting the client on port 3000, the corresponding URI will be: `https://javascript-sdk.smartcar.com/v2/redirect?app_origin=http://localhost:3000`
     - `jsonwebtoken-key`: You can obtain a secret key using a generator like UUID or create one yourself. It should be a long and secure string, similar to a passphrase.
 
-2. In the Configuration tab of your [Smartcar Developer Dashboard](https://dashboard.smartcar.com/signup), set your `redirect_uri` with the one above.
+2. In the Configuration tab of your [Smartcar Developer Dashboard](https://dashboard.smartcar.com), set your `redirect_uri`.
+    a. `redirect_uri`: As we'll be utilizing the Smartcar JS SDK and hosting the client on port 3000, the corresponding URI will be: `https://javascript-sdk.smartcar.com/v2/redirect?app_origin=http://localhost:3000`
 
 3. Make sure you have cloned this repo and change into the server directory
 ```bash

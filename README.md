@@ -38,6 +38,7 @@ This Starter App supports live vehicle connections by default. Should you prefer
 
 1. Before we get started, create an application on the [Smartcar's Developer Dashboard](https://dashboard.smartcar.com/signup) to obtain your API keys. The following keys will be required:
     - `client_id`: This key can be found in your Smartcar Developer Dashboard under the 'Configuration' tab.
+    - `client_secret`: This can be regenerated in your Smartcar Developer Dashboard under the 'Configuration' tab. Ensure this key is copied after regenerated as it will not be displayed again.
     - `jsonwebtoken-key`: You can obtain a secret key using a generator like UUID or create one yourself. It should be a long and secure string, similar to a passphrase.
 
 2. In the Configuration tab of your [Smartcar Developer Dashboard](https://dashboard.smartcar.com), set your `redirect_uri`:

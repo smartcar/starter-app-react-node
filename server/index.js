@@ -32,7 +32,7 @@ const client = new smartcar.AuthClient({
   clientId: process.env.SMARTCAR_CLIENT_ID,
   clientSecret: process.env.SMARTCAR_CLIENT_SECRET,
   redirectUri: process.env.SMARTCAR_REDIRECT_URI,
-  mode: 'live', // one of ['live', 'test', 'simulated']
+  mode: 'live', // one of ['live', 'simulated']
 });
 
 // Exchanges code for access object, attaches access object to session cookie as a JWT

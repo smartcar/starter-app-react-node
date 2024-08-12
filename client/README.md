@@ -21,7 +21,7 @@ In production, replace the localhosts with the correct client and server urls.
 
 ## About the code
 
-**Custom configuration**: The configuration file `config.js` contains application specific settings that allow for quick customizations. Includes displayed properties, UI, unit system, mode (live, test, simulated), brand select, single select. Customize one of the four prebuilt configurations or build your own from scratch!
+**Custom configuration**: The configuration file `config.js` contains application specific settings that allow for quick customizations. Includes displayed properties, UI, unit system, mode (live, simulated), brand select, single select. Customize one of the four prebuilt configurations or build your own from scratch!
 
 **Components**:
 

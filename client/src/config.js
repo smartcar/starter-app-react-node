@@ -307,7 +307,7 @@ const buildYourOwnConfig = {
    * Section 2: Configure the Smartcar instance and Connect flow
    * You can also do this directly where smartcar gets instantiated in App.jsx
    */
-  mode: 'live', // one of ['live', 'test', 'simulated']
+  mode: 'live', // one of ['live', 'simulated']
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: false,

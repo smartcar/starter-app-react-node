@@ -15,4 +15,4 @@ Placeholder to drop images and videos if needed.
 ## Examples of Great PRs
 - https://github.com/smartcar/connect-frontend/pull/83
 - https://github.com/smartcar/connect-frontend/pull/56
-- https://github.com/smartcar/connect-frontend/pull/76https://github.com/smartcar/connect-frontend/pull/76
+- https://github.com/smartcar/connect-frontend/pull/76

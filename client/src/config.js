@@ -221,7 +221,7 @@ const energyUtilitiesConfig = {
     appName: 'ChargeUp',
     loadingMessage: 'Charging up the information superhighway...buckle up!',
   },
-  mode: 'live',  // Reverted back to live
+  mode: 'live',
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
   singleSelect: false,
@@ -254,7 +254,7 @@ const carSharingConfig = {
     appName: 'CarShare',
     loadingMessage: 'Roaming the streets for your perfect ride...',
   },
-  mode: 'live',  // Reverted back to live
+  mode: 'live',
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
@@ -332,4 +332,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = buildYourOwnConfig;  // Reverted back to default config
+export const config = buildYourOwnConfig;

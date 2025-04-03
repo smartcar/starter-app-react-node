@@ -193,6 +193,7 @@ const properties = {
   },
 };
 
+// eslint-disable-next-line no-unused-vars
 const autoInsuranceConfig = {
   staticText: {
     appName: 'Sky Insurance',
@@ -220,7 +221,7 @@ const energyUtilitiesConfig = {
     appName: 'ChargeUp',
     loadingMessage: 'Charging up the information superhighway...buckle up!',
   },
-  mode: 'live',
+  mode: 'live',  // Reverted back to live
   unitSystem: 'imperial',
   brandSelect: 'TESLA',
   singleSelect: false,
@@ -247,12 +248,13 @@ const energyUtilitiesConfig = {
   ],
 };
 
+// eslint-disable-next-line no-unused-vars
 const carSharingConfig = {
   staticText: {
     appName: 'CarShare',
     loadingMessage: 'Roaming the streets for your perfect ride...',
   },
-  mode: 'live',
+  mode: 'live',  // Reverted back to live
   unitSystem: 'imperial',
   brandSelect: '',
   singleSelect: true,
@@ -272,6 +274,7 @@ const carSharingConfig = {
   ],
 };
 
+// eslint-disable-next-line no-unused-vars
 const roadsideAssistanceConfig = {
   staticText: {
     appName: 'RoadsideAssist',
@@ -294,6 +297,7 @@ const roadsideAssistanceConfig = {
   ],
 };
 
+// eslint-disable-next-line no-unused-vars
 const buildYourOwnConfig = {
   /**
    * Section 1: Personalize your app!
@@ -328,4 +332,4 @@ const buildYourOwnConfig = {
   ],
 };
 
-export const config = buildYourOwnConfig;
+export const config = buildYourOwnConfig;  // Reverted back to default config

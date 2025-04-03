@@ -19,10 +19,24 @@
   },
   "dependencies": {
     "@smartcar/auth": "^2.9.0",
-    "axios": "^0.26.1",
+    "@svgr/webpack": "^8.1.0",
+    "axios": "^1.8.4",
+    "css-select": "^5.1.0",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "resolve-url-loader": "^5.0.0",
+    "svgo": "^3.3.2"
+  },
+  "overrides": {
+    "nth-check": "^2.1.1",
+    "css-select": "^5.1.0",
+    "postcss": "^8.4.31",
+    "svgo": "^3.3.2",
+    "@svgr/webpack": "^8.1.0",
+    "resolve-url-loader": "^5.0.0"
   },
   "engines": {
     "node": ">=14.4.0",

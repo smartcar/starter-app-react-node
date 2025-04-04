@@ -193,6 +193,7 @@ const properties = {
   },
 };
 
+// eslint-disable-next-line no-unused-vars
 const autoInsuranceConfig = {
   staticText: {
     appName: 'Sky Insurance',
@@ -247,6 +248,7 @@ const energyUtilitiesConfig = {
   ],
 };
 
+// eslint-disable-next-line no-unused-vars
 const carSharingConfig = {
   staticText: {
     appName: 'CarShare',
@@ -272,6 +274,7 @@ const carSharingConfig = {
   ],
 };
 
+// eslint-disable-next-line no-unused-vars
 const roadsideAssistanceConfig = {
   staticText: {
     appName: 'RoadsideAssist',
@@ -294,6 +297,7 @@ const roadsideAssistanceConfig = {
   ],
 };
 
+// eslint-disable-next-line no-unused-vars
 const buildYourOwnConfig = {
   /**
    * Section 1: Personalize your app!
